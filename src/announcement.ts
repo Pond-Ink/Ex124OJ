@@ -24,13 +24,11 @@ export function exAnnouncements() {
                         }
                     }
                     trs[trs.length - 1].innerHTML = '<td class="text-right" colspan="3"><a href="/announcements">所有公告……</a></td><td class="text-right" colspan="3"><a href="https://ex124oj.pond.ink/categories/Announcements/">所有公告……</a></td>';
-                    const PostsBody = document.createElement('div');
-                    PostsBody.innerHTML = data.response.match(PostsExp)[1];
-                    console.log(PostsBody);
-                    const Posts = PostsBody.querySelectorAll('article');
+                    const PostsPage = (new DOMParser()).parseFromString(data.response, 'text/html');
+                    const Posts = PostsPage.querySelectorAll('article');
                     for (var i = 0; i < Posts.length && i < 5; ++i) {
                         const title = (Posts[i].querySelector('a.post-title-link') as HTMLAnchorElement);
-                        (Announcements.querySelector('tbody') as HTMLElement).children[i].children[3].innerHTML = `<a href="${title.href}">${title.innerText}</a>`;
+                        (Announcements.querySelector('tbody') as HTMLElement).children[i].children[3].innerHTML = `<a href="https://ex124oj.pond.ink${title.getAttribute('href')}">${title.innerText}</a>`;
                         (Announcements.querySelector('tbody') as HTMLElement).children[i].children[4].innerHTML = '<a class="uoj-username" href="https://ex124oj.pond.ink/" style="color:rgb(40,173,202)">Ex124OJ</a>';
                         const date = (Posts[i].querySelector('time') as HTMLTimeElement);
                         (Announcements.querySelector('tbody') as HTMLElement).children[i].children[5].innerHTML = '<small>' + date.getAttribute('content') + '</small>'
