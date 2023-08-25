@@ -1,4 +1,4 @@
-export const version = "1.0.0";
+export const version = "1.0.1";
 
 export var BackgroundImage: string;
 export var SiteIconImage: string;
@@ -18,6 +18,7 @@ export function getVariables(callback: Function) {
     GM_xmlhttpRequest({
         method: "GET",
         url: "https://ex124oj.pond.ink/public/variables.json",
+        revalidate: true,
         onload: (data) => {
             const variables = JSON.parse(data.response);
             NameColorList = variables.NameColorList;

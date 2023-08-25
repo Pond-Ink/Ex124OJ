@@ -6,6 +6,7 @@ export function exAnnouncements() {
         GM_xmlhttpRequest({
             method: "GET",
             url: "https://ex124oj.pond.ink/categories/Announcements/",
+            revalidate: true,
             onload: function(data) {
                 const Announcements = document.querySelector('div.uoj-content > div.card.card-default > div.card-body > div.row > div:first-child > table');
                 if (Announcements) {
@@ -22,9 +23,10 @@ export function exAnnouncements() {
                             }
                         }
                     }
-                    (Announcements.querySelector('tbody')!.lastChild as HTMLElement).innerHTML = '<td class="text-right" colspan="3"><a href="/announcements">所有公告……</a></td><td class="text-right" colspan="3"><a href="https://ex124oj.pond.ink/categories/Announcements/">所有公告……</a></td>';
+                    trs[trs.length - 1].innerHTML = '<td class="text-right" colspan="3"><a href="/announcements">所有公告……</a></td><td class="text-right" colspan="3"><a href="https://ex124oj.pond.ink/categories/Announcements/">所有公告……</a></td>';
                     const PostsBody = document.createElement('div');
                     PostsBody.innerHTML = data.response.match(PostsExp)[1];
+                    console.log(PostsBody);
                     const Posts = PostsBody.querySelectorAll('article');
                     for (var i = 0; i < Posts.length && i < 5; ++i) {
                         const title = (Posts[i].querySelector('a.post-title-link') as HTMLAnchorElement);
