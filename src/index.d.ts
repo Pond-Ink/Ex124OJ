@@ -13,6 +13,8 @@ interface GMXMLHttpRequestDetails {
   url: string;
   headers?: { [key: string]: string };
   data?: string | FormData;
+  nocache?: boolean;
+  revalidate?: boolean;
   responseType?: "text" | "json" | "arraybuffer" | "blob" | "document";
   timeout?: number;
   onload?: (response: GMXMLHttpRequestResponse) => void;

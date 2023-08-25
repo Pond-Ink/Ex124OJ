@@ -5,7 +5,7 @@ const metadata =
 `// ==UserScript==
 // @name         Ex124OJ
 // @namespace    http://tampermonkey.net/
-// @version      1.0.0
+// @version      ${require('./package.json').version}
 // @description  Extend 124OJ!
 // @author       Sukwants
 // @license      MIT
