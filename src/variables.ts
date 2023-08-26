@@ -1,4 +1,4 @@
-export const version = "1.0.2";
+export const version = "1.0.3";
 
 export var BackgroundImage: string;
 export var SiteIconImage: string;
@@ -6,8 +6,8 @@ export var SiteIconSmallImage: string;
 export var Academic: boolean;
 
 export var NameColorList: { [key: string]: string[]; };
-export var CCFBadgeList: { [key: string]: string; };
-export var TagBadgeList: { [key: string]: string[]; };
+export var CCFBadgeList: { [key: string]: string[]; };
+export var TagBadgeList: { [key: string]: { color: string, text: string }[]; };
 
 export function getVariables(callback: Function) {
     BackgroundImage = GM_getValue('BackgroundImage', '');
