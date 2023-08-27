@@ -1,4 +1,4 @@
-export const version = "1.0.3";
+export const version = "1.0.4";
 
 export var BackgroundImage: string;
 export var SiteIconImage: string;
@@ -8,6 +8,15 @@ export var Academic: boolean;
 export var NameColorList: { [key: string]: string[]; };
 export var CCFBadgeList: { [key: string]: string[]; };
 export var TagBadgeList: { [key: string]: { color: string, text: string }[]; };
+
+function getRandomColorCode() {
+    const letters = '0123456789ABCDEF';
+    let colorCode = '#';
+    for (let i = 0; i < 6; i++) {
+        colorCode += letters[Math.floor(Math.random() * 16)];
+    }
+    return colorCode;
+}
 
 export function getVariables(callback: Function) {
     BackgroundImage = GM_getValue('BackgroundImage', '');
@@ -21,12 +30,31 @@ export function getVariables(callback: Function) {
         revalidate: true,
         onload: (data) => {
             const variables = JSON.parse(data.response);
+            const randomcolor = getRandomColorCode();
             NameColorList = variables.NameColorList;
-            GM_setValue('NameColorList', NameColorList);
+            for (let i in NameColorList) {
+                for (let j = 0; j < NameColorList[i].length; j++) {
+                    if (NameColorList[i][j] == 'rand') {
+                        NameColorList[i][j] = randomcolor;
+                    }
+                }
+            }
             CCFBadgeList = variables.CCFBadgeList;
-            GM_setValue('CCFBadgeList', CCFBadgeList);
+            for (let i in CCFBadgeList) {
+                for (let j = 0; j < CCFBadgeList[i].length; j++) {
+                    if (CCFBadgeList[i][j] == 'rand') {
+                        CCFBadgeList[i][j] = randomcolor;
+                    }
+                }
+            }
             TagBadgeList = variables.TagBadgeList;
-            GM_setValue('TagBadgeList', TagBadgeList);
+            for (let i in TagBadgeList) {
+                for (let j = 0; j < TagBadgeList[i].length; j++) {
+                    if (TagBadgeList[i][j].color == 'rand') {
+                        TagBadgeList[i][j].color = randomcolor;
+                    }
+                }
+            }
             callback();
         }
     });
