@@ -32,13 +32,13 @@ export function NameBadge() {
             if (!name || Names[i].parentElement?.getAttribute('class') == 'legendLabel') continue;
             if (CCFBadgeList[name]) {
                 for (const j in CCFBadgeList[name]) {
-                    console.log(name, Names[i].textContent, CCFBadgeList[name][j]);
+                    // console.log(name, Names[i].textContent, CCFBadgeList[name][j]);
                     Names[i].innerHTML += ` ${ccfbadgecode(CCFBadgeList[name][j])}`;
                 }
             }
             if (TagBadgeList[name]) {
                 for (const j in TagBadgeList[name]) {
-                    console.log(Names[i].textContent, TagBadgeList[name][j]);
+                    // console.log(Names[i].textContent, TagBadgeList[name][j]);
                     Names[i].innerHTML += ` ${tagbadgecode(TagBadgeList[name][j].color, TagBadgeList[name][j].text)}`;
                 }
             }
