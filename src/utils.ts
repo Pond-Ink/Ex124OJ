@@ -8,6 +8,11 @@ export function isSubmission() {
     return window.location.href.match(submissionRegExp);
 }
 
+const ContestsRegExp = /^http:\/\/124.221.194.184\/contests(\/)?(\?.*)?$/;
+export function isContests() {
+    return window.location.href.match(ContestsRegExp);
+}
+
 const ProblemRegExp = /^http:\/\/124.221.194.184.*\/problem\/(\d+)(\?.*)?$/;
 export function isProblem() {
     return window.location.href.match(ProblemRegExp);
