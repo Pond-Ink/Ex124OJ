@@ -2,7 +2,7 @@ import { version, BackgroundImage, SiteIconImage, SiteIconSmallImage, Academic, 
 
 export function Settings() {
     GM_addStyle(
-`.settings-overlay {
+        `.settings-overlay {
     position: fixed;
     height: 100%;
     width: 100%;
@@ -45,6 +45,46 @@ export function Settings() {
 .settings-footerbar {
     height: 60px;
     padding: 20px 20px;
+}
+.switch {
+    position: relative;
+    top: 1.2em;
+    display: inline-block;
+    width: 60px;
+    height: 28px;
+}
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 28px;
+}
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 20px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+input:checked + .slider {
+    background-color: #2196F3;
+}
+input:checked + .slider:before {
+    transform: translateX(32px);
 }`);
 
     const HomepageEntrance = document.createElement('li');
@@ -52,7 +92,7 @@ export function Settings() {
     NavBarTablist!.insertBefore(HomepageEntrance, NavBarTablist!.firstChild);
     HomepageEntrance.setAttribute('class', 'nav-item');
     HomepageEntrance.innerHTML = '<span style="padding: 0.5rem 1rem; cursor:pointer"><span style="background-color: #28adca;padding:0.2em 0.6em;border-radius: 1em;color:#fff;font-size: 0.7em;font-weight:bold;display:inline-block;position: relative;top: 50%;transform: translate(0,-50%);">Ex124OJ</span></span>';
-    HomepageEntrance.onclick = function() {
+    HomepageEntrance.onclick = function () {
         document.body.setAttribute('class', 'settings-popup-active');
     }
     const SettingsOverlay = document.createElement('div');
@@ -107,55 +147,42 @@ export function Settings() {
     siteIconSmallImageInput.setAttribute('style', 'flex-grow: 1; height: 2em; width: initial');
     siteIconSmallImageInput.setAttribute('class', 'form-control');
 
+    const Switchs = document.createElement('div');
+    SettingsPopup.appendChild(Switchs);
+    Switchs.setAttribute('class', 'row');
+    Switchs.setAttribute('style', 'line-height: 2.5em;vertical-align: middle');
+
     const academic = document.createElement('div');
-    SettingsPopup.appendChild(academic);
-    academic.setAttribute('class', 'row');
-    academic.setAttribute('style', 'line-height: 2.5em;vertical-align: middle');
+    Switchs.appendChild(academic);
+    academic.setAttribute('style', 'vertical-align: middle');
     const academicLabel = document.createElement('strong');
     academic.appendChild(academicLabel);
     academicLabel.setAttribute('style', 'font-size: 1.25em');
     academicLabel.innerHTML = '学术模式&emsp;&emsp;&emsp;&emsp;';
-    const academicOff = document.createElement('div');
-    academic.appendChild(academicOff);
-    academicOff.innerHTML = '<input type="radio" id="AcademicOff"> 关闭&emsp;';
-    const academicOn = document.createElement('div');
-    academic.appendChild(academicOn);
-    academicOn.innerHTML = '<input type="radio" id="AcademicOn"> 开启&emsp;';
-    (document.getElementById('AcademicOff') as HTMLInputElement).onclick = function() {
-        (document.getElementById('AcademicOn') as HTMLInputElement).checked = false;
-    };
-    (document.getElementById('AcademicOn') as HTMLInputElement).onclick = function() {
-        (document.getElementById('AcademicOff') as HTMLInputElement).checked = false;
-    };
+    const academicSwitch = document.createElement('label');
+    academicSwitch.className = 'switch';
+    academic.appendChild(academicSwitch);
+    academicSwitch.innerHTML = '<input type="checkbox" id="AcademicSwitch" style="display: none;">\n<i id="AcademicSwitchIcon" class="slider"></i>';
+
+    { const space = document.createElement('p'); Switchs.appendChild(space); space.innerHTML = '&emsp;&emsp;&emsp;&emsp;' }
 
     const ligatures = document.createElement('div');
-    SettingsPopup.appendChild(ligatures);
-    ligatures.setAttribute('class', 'row');
-    ligatures.setAttribute('style', 'line-height: 2.5em;vertical-align: middle');
+    Switchs.appendChild(ligatures);
+    academic.setAttribute('style', 'vertical-align: middle');
     const ligaturesLabel = document.createElement('strong');
     ligatures.appendChild(ligaturesLabel);
     ligaturesLabel.setAttribute('style', 'font-size: 1.25em');
     ligaturesLabel.innerHTML = '代码连字&emsp;&emsp;&emsp;&emsp;';
-    const ligaturesOff = document.createElement('div');
-    ligatures.appendChild(ligaturesOff);
-    ligaturesOff.innerHTML = '<input type="radio" id="LigaturesOff"> 关闭&emsp;';
-    const ligaturesOn = document.createElement('div');
-    ligatures.appendChild(ligaturesOn);
-    ligaturesOn.innerHTML = '<input type="radio" id="LigaturesOn"> 开启&emsp;';
-    (document.getElementById('LigaturesOff') as HTMLInputElement).onclick = function() {
-        (document.getElementById('LigaturesOn') as HTMLInputElement).checked = false;
-    };
-    (document.getElementById('LigaturesOn') as HTMLInputElement).onclick = function() {
-        (document.getElementById('LigaturesOff') as HTMLInputElement).checked = false;
-    };
+    const ligaturesSwitch = document.createElement('label');
+    ligaturesSwitch.className = 'switch';
+    ligatures.appendChild(ligaturesSwitch);
+    ligaturesSwitch.innerHTML = '<input type="checkbox" id="LigaturesSwitch" style="display: none;">\n<i id="LigaturesSwitchIcon" class="slider"></i>';
 
     backgroundImageInput.value = BackgroundImage;
     siteIconImageInput.value = SiteIconImage;
     siteIconSmallImageInput.value = SiteIconSmallImage;
-    (document.getElementById('AcademicOff') as HTMLInputElement).checked = !Academic;
-    (document.getElementById('AcademicOn') as HTMLInputElement).checked = Academic;
-    (document.getElementById('LigaturesOff') as HTMLInputElement).checked = !Ligatures;
-    (document.getElementById('LigaturesOn') as HTMLInputElement).checked = Ligatures;
+    (document.getElementById('AcademicSwitch') as HTMLInputElement).checked = Academic;
+    (document.getElementById('LigaturesSwitch') as HTMLInputElement).checked = Ligatures;
 
     const FooterRow = document.createElement('div');
     FooterRow.setAttribute('class', 'settings-footerbar');
@@ -164,19 +191,19 @@ export function Settings() {
     FooterRow.appendChild(Ok);
     Ok.setAttribute('class', 'btn btn-search btn-outline-primary float-right');
     Ok.innerHTML = '保存';
-    Ok.onclick = function() {
+    Ok.onclick = function () {
         GM_setValue('BackgroundImage', backgroundImageInput.value);
         GM_setValue('SiteIconImage', siteIconImageInput.value);
         GM_setValue('SiteIconSmallImage', siteIconSmallImageInput.value);
-        GM_setValue('Academic', (document.getElementById('AcademicOn') as HTMLInputElement).checked);
-        GM_setValue('Ligatures', (document.getElementById('LigaturesOn') as HTMLInputElement).checked);
+        GM_setValue('Academic', (document.getElementById('AcademicSwitch') as HTMLInputElement).checked);
+        GM_setValue('Ligatures', (document.getElementById('LigaturesSwitch') as HTMLInputElement).checked);
         location.reload();
     };
     const Clear = document.createElement('button');
     FooterRow.appendChild(Clear);
     Clear.setAttribute('class', 'btn btn-search btn-outline-primary float-right');
     Clear.innerHTML = '恢复默认';
-    Clear.onclick = function() {
+    Clear.onclick = function () {
         const values = GM_listValues();
         for (const value in values) {
             GM_deleteValue(values[value]);
