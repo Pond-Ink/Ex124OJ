@@ -1,4 +1,4 @@
-import { version, BackgroundImage, SiteIconImage, SiteIconSmallImage, Academic } from "./variables";
+import { version, BackgroundImage, SiteIconImage, SiteIconSmallImage, Academic, Ligatures } from "./variables";
 
 export function Settings() {
     GM_addStyle(
@@ -128,11 +128,34 @@ export function Settings() {
         (document.getElementById('AcademicOff') as HTMLInputElement).checked = false;
     };
 
+    const ligatures = document.createElement('div');
+    SettingsPopup.appendChild(ligatures);
+    ligatures.setAttribute('class', 'row');
+    ligatures.setAttribute('style', 'line-height: 2.5em;vertical-align: middle');
+    const ligaturesLabel = document.createElement('strong');
+    ligatures.appendChild(ligaturesLabel);
+    ligaturesLabel.setAttribute('style', 'font-size: 1.25em');
+    ligaturesLabel.innerHTML = '代码连字&emsp;&emsp;&emsp;&emsp;';
+    const ligaturesOff = document.createElement('div');
+    ligatures.appendChild(ligaturesOff);
+    ligaturesOff.innerHTML = '<input type="radio" id="LigaturesOff"> 关闭&emsp;';
+    const ligaturesOn = document.createElement('div');
+    ligatures.appendChild(ligaturesOn);
+    ligaturesOn.innerHTML = '<input type="radio" id="LigaturesOn"> 开启&emsp;';
+    (document.getElementById('LigaturesOff') as HTMLInputElement).onclick = function() {
+        (document.getElementById('LigaturesOn') as HTMLInputElement).checked = false;
+    };
+    (document.getElementById('LigaturesOn') as HTMLInputElement).onclick = function() {
+        (document.getElementById('LigaturesOff') as HTMLInputElement).checked = false;
+    };
+
     backgroundImageInput.value = BackgroundImage;
     siteIconImageInput.value = SiteIconImage;
     siteIconSmallImageInput.value = SiteIconSmallImage;
     (document.getElementById('AcademicOff') as HTMLInputElement).checked = !Academic;
     (document.getElementById('AcademicOn') as HTMLInputElement).checked = Academic;
+    (document.getElementById('LigaturesOff') as HTMLInputElement).checked = !Ligatures;
+    (document.getElementById('LigaturesOn') as HTMLInputElement).checked = Ligatures;
 
     const FooterRow = document.createElement('div');
     FooterRow.setAttribute('class', 'settings-footerbar');
@@ -146,6 +169,7 @@ export function Settings() {
         GM_setValue('SiteIconImage', siteIconImageInput.value);
         GM_setValue('SiteIconSmallImage', siteIconSmallImageInput.value);
         GM_setValue('Academic', (document.getElementById('AcademicOn') as HTMLInputElement).checked);
+        GM_setValue('Ligatures', (document.getElementById('LigaturesOn') as HTMLInputElement).checked);
         location.reload();
     };
     const Clear = document.createElement('button');

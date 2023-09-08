@@ -4,6 +4,7 @@ export var BackgroundImage: string;
 export var SiteIconImage: string;
 export var SiteIconSmallImage: string;
 export var Academic: boolean;
+export var Ligatures: boolean;
 
 export var NameColorList: { [key: string]: string[]; };
 export var CCFBadgeList: { [key: string]: string[]; };
@@ -23,6 +24,7 @@ export function getVariables(callback: Function) {
     SiteIconImage = GM_getValue('SiteIconImage', '');
     SiteIconSmallImage = GM_getValue('SiteIconSmallImage', '');
     Academic = GM_getValue('Academic', false);
+    Ligatures = GM_getValue('Ligatures', false);
 
     GM_xmlhttpRequest({
         method: "GET",
