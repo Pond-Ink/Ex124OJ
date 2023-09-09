@@ -43,3 +43,17 @@ export function ContestsCard() {
         }
     }
 }
+
+export function ContestStandings() {
+    const lines = document.querySelectorAll('div#standings > div.table-responsive > table tr');
+    for (let i = 0; i < lines.length; i++) {
+        const line = lines[i];
+        let x = 0;
+        for (let j = 0; j < line.children.length && j < 3; j++) {
+            (line.children[j] as HTMLElement).style.position = 'sticky';
+            (line.children[j] as HTMLElement).style.left = x + 'px';
+            (line.children[j] as HTMLElement).style.backgroundColor = ({ 'rgba(0, 0, 0, 0)': 'rgb(255, 255, 255)', 'rgba(0, 0, 0, 0.05)': 'rgb(242.25, 242.25, 242.25)' })[window.getComputedStyle(lines[i] as HTMLElement).backgroundColor] || '#ffffff';
+            x = x + parseFloat(window.getComputedStyle(line.children[j]).width);
+        }
+    }
+}

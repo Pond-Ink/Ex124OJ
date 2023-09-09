@@ -1,13 +1,13 @@
 /// <reference path="index.d.ts" />
 
-import { isHomepage, isSubmission, isContests, isProblem, isUserProfile, isBlog } from "./utils";
+import { isHomepage, isSubmission, isContests, isStandings, isProblem, isUserProfile, isBlog } from "./utils";
 import { getVariables } from "./variables";
 import { Settings } from "./settings";
 import { NameColor, NameBadge } from "./name";
 import { FontAwesome } from "./fontawesome";
 import { Background, changeIcon } from "./appearance";
 import { DiscussionCard } from "./discussion";
-import { ContestsCard } from "./contest";
+import { ContestsCard, ContestStandings } from "./contest";
 import { CodeBlock } from "./code";
 import { TableStyle } from "./table";
 import { RandomProblem } from "./toolbar";
@@ -34,6 +34,7 @@ import { changeGravatarURL } from "./gravatar";
     if (isHomepage()) exAnnouncements();
     if (isSubmission()) SubmissionCard();
     if (isContests()) ContestsCard();
+    if (isStandings()) ContestStandings();
     if (isProblem()) downloadData();
     if (isUserProfile() || isBlog()) changeGravatarURL();
 })();
