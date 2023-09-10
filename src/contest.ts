@@ -69,19 +69,16 @@ export function ContestStandings() {
                 if (rows[i].children.length >= 2) {
                     const id = rows[i].children[0].textContent, title = rows[i].children[1].textContent;
                     if (id && title) {
-                        problems[id] = title;
+                        problems[id] = `${id}. ${title}`;
                     }
                 }
             }
-            const head = document.querySelector('div#standings > div.table-responsive > table > thead > tr');
-            if (head) {
-                for (let i = 3; i < head.children.length; i++) {
-                    const links = head.children[i].querySelectorAll('a');
-                    for (let j = 0; j < links.length; j++) {
-                        const id = links[j].textContent;
-                        if (id && problems[id]) {
-                            links[j].title = problems[id];
-                        }
+            for (let i = 0; i < lines.length; i++) {
+                const line = lines[i];
+                for (let j = 3; j < line.children.length; j++) {
+                    const title = lines[0].children[j].querySelector('a');
+                    if (title && title.textContent && problems[title.textContent]) {
+                        (line.children[j] as HTMLElement).title = problems[title.textContent];
                     }
                 }
             }
