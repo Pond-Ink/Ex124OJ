@@ -33,6 +33,9 @@ export function Settings() {
 .settings-popup .row {
     padding: 0 30px 30px;
 }
+.settings-popup .row * {
+    margin-bottom: 0;
+}
 .settings-titlebar {
     padding: 10px 20px 30px 20px !important;
 }
@@ -48,8 +51,7 @@ export function Settings() {
 }
 .switch {
     position: relative;
-    top: 1.2em;
-    display: inline-block;
+    vertical-align: middle;
     width: 60px;
     height: 28px;
 }
@@ -153,14 +155,13 @@ input:checked + .slider:before {
     const Switchs = document.createElement('div');
     SettingsPopup.appendChild(Switchs);
     Switchs.setAttribute('class', 'row');
-    Switchs.setAttribute('style', 'line-height: 2.5em;vertical-align: middle');
 
     const academic = document.createElement('div');
     Switchs.appendChild(academic);
-    academic.setAttribute('style', 'vertical-align: middle');
+    // academic.setAttribute('style', 'vertical-align: middle');
     const academicLabel = document.createElement('strong');
     academic.appendChild(academicLabel);
-    academicLabel.setAttribute('style', 'font-size: 1.25em');
+    academicLabel.setAttribute('style', 'font-size: 1.25em; vertical-align: middle;');
     academicLabel.innerHTML = '学术模式&emsp;&emsp;&emsp;&emsp;';
     const academicSwitch = document.createElement('label');
     academicSwitch.className = 'switch';
@@ -171,10 +172,10 @@ input:checked + .slider:before {
 
     const ligatures = document.createElement('div');
     Switchs.appendChild(ligatures);
-    academic.setAttribute('style', 'vertical-align: middle');
+    // academic.setAttribute('style', 'vertical-align: middle');
     const ligaturesLabel = document.createElement('strong');
     ligatures.appendChild(ligaturesLabel);
-    ligaturesLabel.setAttribute('style', 'font-size: 1.25em');
+    ligaturesLabel.setAttribute('style', 'font-size: 1.25em; vertical-align: middle;');
     ligaturesLabel.innerHTML = '代码连字&emsp;&emsp;&emsp;&emsp;';
     const ligaturesSwitch = document.createElement('label');
     ligaturesSwitch.className = 'switch';

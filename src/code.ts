@@ -5,7 +5,7 @@ export function CodeBlock() {
 `@import url(https://cdn.jsdelivr.net/npm/firacode@6.2.0/distr/fira_code.css);
 code {
     font-family: "Fira Code";
-    ${Ligatures ? '' : 'font-variant-ligatures: none !important;'}
+    ${Ligatures ? '' : 'font-variant-ligatures: none;'}
 }
 code.sh_cpp>span {
     font-style: normal !important;
