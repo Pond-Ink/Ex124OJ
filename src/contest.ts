@@ -44,6 +44,7 @@ export function ContestsCard() {
     }
 }
 
+declare let contest_id: any;
 export function ContestStandings() {
     const lines = document.querySelectorAll('div#standings > div.table-responsive > table tr');
     for (let i = 0; i < lines.length; i++) {
@@ -56,4 +57,34 @@ export function ContestStandings() {
             x = x + parseFloat(window.getComputedStyle(line.children[j]).width);
         }
     }
+
+    GM_xmlhttpRequest({
+        method: "GET",
+        url: `/contest/${contest_id}`,
+        revalidate: true,
+        onload: (data) => {
+            const problems : { [key: string]: string; } = {};
+            const rows = (new DOMParser()).parseFromString(data.response, 'text/html').querySelectorAll('table > tbody > tr');
+            for (let i = 0; i < rows.length; i++) {
+                if (rows[i].children.length >= 2) {
+                    const id = rows[i].children[0].textContent, title = rows[i].children[1].textContent;
+                    if (id && title) {
+                        problems[id] = title;
+                    }
+                }
+            }
+            const head = document.querySelector('div#standings > div.table-responsive > table > thead > tr');
+            if (head) {
+                for (let i = 3; i < head.children.length; i++) {
+                    const links = head.children[i].querySelectorAll('a');
+                    for (let j = 0; j < links.length; j++) {
+                        const id = links[j].textContent;
+                        if (id && problems[id]) {
+                            links[j].title = problems[id];
+                        }
+                    }
+                }
+            }
+        }
+    });
 }
