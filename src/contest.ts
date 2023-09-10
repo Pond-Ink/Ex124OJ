@@ -46,97 +46,199 @@ export function ContestsCard() {
     }
 }
 
-declare let contest_id: any;
-declare let standings: any;
-declare let score: any;
-declare let showStandings: any;
-declare let getColOfScore: any;
-
-let Problemchecked: boolean[] = [];
-function ShowStandings() {
+function PinLineHeader() {
     const lines = document.querySelectorAll('div#standings > div.table-responsive > table tr');
-    const headline = lines[0];
-    if (Problemchecked.length == 0) Problemchecked = new Array(headline.children.length - 3).fill(false);
     for (let i = 0; i < lines.length; i++) {
         const line = lines[i];
         let x = 0;
         for (let j = 0; j < line.children.length && j < 3; j++) {
             (line.children[j] as HTMLElement).style.position = 'sticky';
             (line.children[j] as HTMLElement).style.left = x + 'px';
-            (line.children[j] as HTMLElement).style.backgroundColor = ({ 'rgba(0, 0, 0, 0)': 'rgb(255, 255, 255)', 'rgba(0, 0, 0, 0.05)': 'rgb(242.25, 242.25, 242.25)' })[window.getComputedStyle(lines[i] as HTMLElement).backgroundColor] || '#ffffff';
+            (line.children[j] as HTMLElement).style.backgroundColor = ({ 'rgba(0, 0, 0, 0)': 'rgb(255, 255, 255)', 'rgba(0, 0, 0, 0.05)': 'rgb(242.25, 242.25, 242.25)' })[window.getComputedStyle(lines[i] as HTMLElement).backgroundColor] || 'rgb(255, 255, 255)';
             x = x + parseFloat(window.getComputedStyle(line.children[j]).width);
         }
     }
+}
 
-    for (let i = 3; i < headline.children.length; i++) {
-        if (Problemchecked[i - 3]) (headline.children[i] as HTMLElement).style.borderBottom = '2px solid #00cc00';
-        headline.children[i].addEventListener('click', function () {
-            UpdateStandings(i - 3);
-        })
+declare let contest_id: number;
+let ContestHomepage: Document;
+function ProblemTitles() {
+    let solve = () => {
+        const lines = document.querySelectorAll('div#standings > div.table-responsive > table tr');
+        const problems : { [key: string]: string; } = {};
+        const rows = ContestHomepage.querySelectorAll('table > tbody > tr');
+        for (let i = 0; i < rows.length; i++) {
+            if (rows[i].children.length >= 2) {
+                const id = rows[i].children[0].textContent, title = rows[i].children[1].textContent;
+                if (id && title) {
+                    problems[id] = `${id}. ${title}`;
+                }
+            }
+        }
+        for (let i = 0; i < lines.length; i++) {
+            const line = lines[i];
+            for (let j = 3; j < line.children.length; j++) {
+                const title = lines[0].children[j].querySelector('a');
+                if (title && title.textContent && problems[title.textContent]) {
+                    (line.children[j] as HTMLElement).title = problems[title.textContent];
+                }
+            }
+        }
+    };
+    if (ContestHomepage) {
+        solve();
+    } else {
+        GM_xmlhttpRequest({
+            method: "GET",
+            url: `/contest/${contest_id}`,
+            revalidate: true,
+            onload: (data) => {
+                ContestHomepage = (new DOMParser()).parseFromString(data.response, 'text/html');
+                solve();
+            }
+        });
+    }
+}
+
+let Problemchecked: boolean[] = [];
+
+declare let standings: Array<[number, number, [string, number], number]>;
+declare let score: { [key: string]: { [key: number]: [number, number, number] } };
+declare function showStandings(): void;
+declare function getColOfScore(score: number): string;
+function ShowStandings() {
+    PinLineHeader();
+    ProblemTitles();
+
+    const headline = document.querySelector('div#standings > div.table-responsive > table tr');
+    if (!headline) {
+        return;
     }
 
     let sum = 0;
-    for (let i = 0; i < headline.children.length - 3; i++) sum += Number(Problemchecked[i]);
-    if (sum == 0) return;
-    for (let i = 1; i < lines.length; i++) {
-        (lines[i].children[2].children[0].children[0] as HTMLElement).style.color = getColOfScore(standings[i - 1][0] / sum);
+    for (let i = 3; i < headline.children.length; i++) {
+        if (Problemchecked[i - 3]) {
+            (headline.children[i] as HTMLElement).classList.add('checked');
+            sum++;
+        }
+        (headline.children[i] as HTMLElement).addEventListener('click', (event) => {
+            const target = event.target as HTMLElement
+            if (target.tagName === 'A') {
+                return;
+            }
+            Problemchecked[i - 3] = !Problemchecked[i - 3];
+            displayStandings();
+        });
+    }
+
+    if (sum == 0) {
+        return;
+    }
+    const scores = document.querySelectorAll('div#standings > div.table-responsive > table > tbody > tr > td:nth-child(3) > div > span.uoj-score');
+    for (let i = 0; i < scores.length; i++) {
+        (scores[i] as HTMLElement).style.color = getColOfScore(standings[i][0] / sum);
     }
 }
-function UpdateStandings(clickid: number) {
-    Problemchecked[clickid] = !Problemchecked[clickid];
-    const lines = document.querySelectorAll('div#standings > div.table-responsive > table tr');
+
+function displayStandings(initial?: boolean) {
+    const standingsArea = document.querySelector('div#standings') as HTMLElement;
+    if (!standingsArea) {
+        return;
+    }
+    
+    const lines = standingsArea.querySelectorAll('div.table-responsive > table tr');
     const headline = lines[0];
-    const Problemsum: number = headline.children.length - 3, Usersum: number = lines.length - 1;
-    let checked = false;
-    for (let i = 0; i < Problemsum; i++) checked = checked || Problemchecked[i];
+    const Problemsum: number = headline.children.length - 3;
+    const Usersum: number = lines.length - 1;
+    // let checked = false;
+    // for (let i = 0; i < Problemsum; i++) {
+    //     checked = checked || Problemchecked[i];
+    // }
 
     for (let i = 0; i < Usersum; i++) {
         const name: string = standings[i][2][0];
         standings[i][0] = standings[i][1] = 0;
         for (let j = 0; j < Problemsum; j++) {
-            if ((Problemchecked[j] || !checked) && score[name][j] !== undefined) standings[i][0] += score[name][j][0], standings[i][1] += score[name][j][1];
+            if ((Problemchecked[j]/* || !checked*/) && score[name][j] !== undefined) {
+                standings[i][0] += score[name][j][0], standings[i][1] += score[name][j][1];
+            }
         }
     }
     standings.sort(function (a: any[], b: any[]) {
-        return b[0] - a[0];
+        return a[0] != b[0] ? b[0] - a[0] : a[1] - b[1];
     });
-    for (let i = 0; i < Usersum; i++) standings[i][3] = i + 1;
+    for (let i = 0; i < Usersum; i++) {
+        if (!i || standings[i][0] != standings[i - 1][0] || standings[i][1] != standings[i - 1][1]) {
+            standings[i][3] = i + 1;
+        } else {
+            standings[i][3] = standings[i - 1][3];
+        }
+    }
 
     const ScrollLeft = document.getElementsByClassName('table-responsive')[0].scrollLeft;
     showStandings();
-    NameColor();
-    NameBadge();
+    if (!initial) {
+        NameColor(standingsArea);
+        NameBadge(standingsArea);
+    }
     ShowStandings();
     document.getElementsByClassName('table-responsive')[0].scrollLeft = ScrollLeft;
 }
-export function ContestStandings() {
-    ShowStandings();
+
+function NavBar(ProblemSum: number) {
+    const navtabs = document.querySelector('div.uoj-content ul[role=tablist]');
+    if (!navtabs) {
+        return;
+    }
+
+    const navbar = document.createElement('div');
+    navtabs.before(navbar);
+    navbar.setAttribute('style', 'border-bottom: 1px solid #dee2e6;');
+
+    const floatright = document.createElement('div');
+    navbar.appendChild(floatright);
+    floatright.setAttribute('class', 'float-right');
     
-    const lines = document.querySelectorAll('div#standings > div.table-responsive > table tr');
-    GM_xmlhttpRequest({
-        method: "GET",
-        url: `/contest/${contest_id}`,
-        revalidate: true,
-        onload: (data) => {
-            const problems : { [key: string]: string; } = {};
-            const rows = (new DOMParser()).parseFromString(data.response, 'text/html').querySelectorAll('table > tbody > tr');
-            for (let i = 0; i < rows.length; i++) {
-                if (rows[i].children.length >= 2) {
-                    const id = rows[i].children[0].textContent, title = rows[i].children[1].textContent;
-                    if (id && title) {
-                        problems[id] = `${id}. ${title}`;
-                    }
-                }
-            }
-            for (let i = 0; i < lines.length; i++) {
-                const line = lines[i];
-                for (let j = 3; j < line.children.length; j++) {
-                    const title = lines[0].children[j].querySelector('a');
-                    if (title && title.textContent && problems[title.textContent]) {
-                        (line.children[j] as HTMLElement).title = problems[title.textContent];
-                    }
-                }
-            }
-        }
+    const unselectall = document.createElement('a');
+    floatright.appendChild(unselectall);
+    unselectall.setAttribute('class', 'btn btn-info btn-sm');
+    unselectall.setAttribute('target', '_blank');
+    unselectall.style.color = '#fff';
+    unselectall.style.cursor = 'pointer';
+    unselectall.addEventListener('click', () => {
+        Problemchecked = new Array(ProblemSum).fill(true);
+        displayStandings();
     });
+    unselectall.innerHTML = '全选';
+    
+    const selectall = document.createElement('a');
+    floatright.appendChild(selectall);
+    selectall.setAttribute('class', 'btn btn-primary btn-sm');
+    selectall.setAttribute('target', '_blank');
+    selectall.style.color = '#fff';
+    selectall.style.cursor = 'pointer';
+    selectall.addEventListener('click', () => {
+        Problemchecked = new Array(ProblemSum).fill(false);
+        displayStandings();
+    });
+    selectall.innerHTML = '全不选';
+
+    navbar.appendChild(navtabs);
+    navtabs.setAttribute('style', 'border-bottom: none');
+}
+
+export function ContestStandings() {
+    GM_addStyle(`
+div#standings > div.table-responsive > table > thead > tr > th:nth-child(n+4) {
+    cursor: pointer;
+}
+div#standings > div.table-responsive > table > thead > tr > th:nth-child(-n+3),
+div#standings > div.table-responsive > table > thead > tr > th:nth-child(n+4).checked {
+    border-bottom-color: #00cc00;
+}
+`);
+    const ProblemSum = document.querySelectorAll('div#standings > div.table-responsive > table > thead > tr > th').length - 3;
+    Problemchecked = new Array(ProblemSum).fill(true);
+    displayStandings(true);
+    NavBar(ProblemSum);
 }
