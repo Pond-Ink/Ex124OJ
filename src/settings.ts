@@ -1,4 +1,4 @@
-import { version, BackgroundImage, SiteIconImage, SiteIconSmallImage, Academic } from "./variables";
+import { version, BackgroundImage, SiteIconImage, SiteIconSmallImage, Academic, Ligatures } from "./variables";
 
 export function Settings() {
     GM_addStyle(
@@ -45,6 +45,49 @@ export function Settings() {
 .settings-footerbar {
     height: 60px;
     padding: 20px 20px;
+}
+.switch {
+    position: relative;
+    top: 1.2em;
+    display: inline-block;
+    width: 60px;
+    height: 28px;
+}
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+.settings-popup-active .slider {
+    position: absolute;
+    visibility: visible;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: background-color .4s;
+    transition: visiblility 0s;
+    border-radius: 28px;
+}
+.settings-popup-active .slider:before {
+    position: absolute;
+    visibility: visible;
+    content: "";
+    height: 20px;
+    width: 20px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+input:checked + .slider {
+    background-color: #28ADCA;
+}
+input:checked + .slider:before {
+    transform: translateX(32px);
 }`);
 
     const HomepageEntrance = document.createElement('li');
@@ -107,32 +150,42 @@ export function Settings() {
     siteIconSmallImageInput.setAttribute('style', 'flex-grow: 1; height: 2em; width: initial');
     siteIconSmallImageInput.setAttribute('class', 'form-control');
 
+    const Switchs = document.createElement('div');
+    SettingsPopup.appendChild(Switchs);
+    Switchs.setAttribute('class', 'row');
+    Switchs.setAttribute('style', 'line-height: 2.5em;vertical-align: middle');
+
     const academic = document.createElement('div');
-    SettingsPopup.appendChild(academic);
-    academic.setAttribute('class', 'row');
-    academic.setAttribute('style', 'line-height: 2.5em;vertical-align: middle');
+    Switchs.appendChild(academic);
+    academic.setAttribute('style', 'vertical-align: middle');
     const academicLabel = document.createElement('strong');
     academic.appendChild(academicLabel);
     academicLabel.setAttribute('style', 'font-size: 1.25em');
     academicLabel.innerHTML = '学术模式&emsp;&emsp;&emsp;&emsp;';
-    const academicOff = document.createElement('div');
-    academic.appendChild(academicOff);
-    academicOff.innerHTML = '<input type="radio" id="AcademicOff"> 关闭&emsp;';
-    const academicOn = document.createElement('div');
-    academic.appendChild(academicOn);
-    academicOn.innerHTML = '<input type="radio" id="AcademicOn"> 开启&emsp;';
-    (document.getElementById('AcademicOff') as HTMLInputElement).onclick = function() {
-        (document.getElementById('AcademicOn') as HTMLInputElement).checked = false;
-    };
-    (document.getElementById('AcademicOn') as HTMLInputElement).onclick = function() {
-        (document.getElementById('AcademicOff') as HTMLInputElement).checked = false;
-    };
+    const academicSwitch = document.createElement('label');
+    academicSwitch.className = 'switch';
+    academic.appendChild(academicSwitch);
+    academicSwitch.innerHTML = '<input type="checkbox" id="AcademicSwitch" style="display: none;">\n<i id="AcademicSwitchIcon" class="slider"></i>';
+
+    { const space = document.createElement('p'); Switchs.appendChild(space); space.innerHTML = '&emsp;&emsp;&emsp;&emsp;' }
+
+    const ligatures = document.createElement('div');
+    Switchs.appendChild(ligatures);
+    academic.setAttribute('style', 'vertical-align: middle');
+    const ligaturesLabel = document.createElement('strong');
+    ligatures.appendChild(ligaturesLabel);
+    ligaturesLabel.setAttribute('style', 'font-size: 1.25em');
+    ligaturesLabel.innerHTML = '代码连字&emsp;&emsp;&emsp;&emsp;';
+    const ligaturesSwitch = document.createElement('label');
+    ligaturesSwitch.className = 'switch';
+    ligatures.appendChild(ligaturesSwitch);
+    ligaturesSwitch.innerHTML = '<input type="checkbox" id="LigaturesSwitch" style="display: none;">\n<i id="LigaturesSwitchIcon" class="slider"></i>';
 
     backgroundImageInput.value = BackgroundImage;
     siteIconImageInput.value = SiteIconImage;
     siteIconSmallImageInput.value = SiteIconSmallImage;
-    (document.getElementById('AcademicOff') as HTMLInputElement).checked = !Academic;
-    (document.getElementById('AcademicOn') as HTMLInputElement).checked = Academic;
+    (document.getElementById('AcademicSwitch') as HTMLInputElement).checked = Academic;
+    (document.getElementById('LigaturesSwitch') as HTMLInputElement).checked = Ligatures;
 
     const FooterRow = document.createElement('div');
     FooterRow.setAttribute('class', 'settings-footerbar');
@@ -145,7 +198,8 @@ export function Settings() {
         GM_setValue('BackgroundImage', backgroundImageInput.value);
         GM_setValue('SiteIconImage', siteIconImageInput.value);
         GM_setValue('SiteIconSmallImage', siteIconSmallImageInput.value);
-        GM_setValue('Academic', (document.getElementById('AcademicOn') as HTMLInputElement).checked);
+        GM_setValue('Academic', (document.getElementById('AcademicSwitch') as HTMLInputElement).checked);
+        GM_setValue('Ligatures', (document.getElementById('LigaturesSwitch') as HTMLInputElement).checked);
         location.reload();
     };
     const Clear = document.createElement('button');
