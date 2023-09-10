@@ -1,3 +1,5 @@
+import { NameBadge, NameColor } from "./name";
+
 export function ContestsCard() {
     const content = document.querySelector('div.uoj-content');
     
@@ -45,8 +47,16 @@ export function ContestsCard() {
 }
 
 declare let contest_id: any;
-export function ContestStandings() {
+declare let standings: any;
+declare let score: any;
+declare let showStandings: any;
+declare let getColOfScore: any;
+
+let Problemchecked: boolean[] = [];
+function ShowStandings() {
     const lines = document.querySelectorAll('div#standings > div.table-responsive > table tr');
+    const headline = lines[0];
+    if (Problemchecked.length == 0) Problemchecked = new Array(headline.children.length - 3).fill(false);
     for (let i = 0; i < lines.length; i++) {
         const line = lines[i];
         let x = 0;
@@ -58,6 +68,51 @@ export function ContestStandings() {
         }
     }
 
+    for (let i = 3; i < headline.children.length; i++) {
+        if (Problemchecked[i - 3]) (headline.children[i] as HTMLElement).style.borderBottom = '2px solid #00cc00';
+        headline.children[i].addEventListener('click', function () {
+            UpdateStandings(i - 3);
+        })
+    }
+
+    let sum = 0;
+    for (let i = 0; i < headline.children.length - 3; i++) sum += Number(Problemchecked[i]);
+    if (sum == 0) return;
+    for (let i = 1; i < lines.length; i++) {
+        (lines[i].children[2].children[0].children[0] as HTMLElement).style.color = getColOfScore(standings[i - 1][0] / sum);
+    }
+}
+function UpdateStandings(clickid: number) {
+    Problemchecked[clickid] = !Problemchecked[clickid];
+    const lines = document.querySelectorAll('div#standings > div.table-responsive > table tr');
+    const headline = lines[0];
+    const Problemsum: number = headline.children.length - 3, Usersum: number = lines.length - 1;
+    let checked = false;
+    for (let i = 0; i < Problemsum; i++) checked = checked || Problemchecked[i];
+
+    for (let i = 0; i < Usersum; i++) {
+        const name: string = standings[i][2][0];
+        standings[i][0] = standings[i][1] = 0;
+        for (let j = 0; j < Problemsum; j++) {
+            if ((Problemchecked[j] || !checked) && score[name][j] !== undefined) standings[i][0] += score[name][j][0], standings[i][1] += score[name][j][1];
+        }
+    }
+    standings.sort(function (a: any[], b: any[]) {
+        return b[0] - a[0];
+    });
+    for (let i = 0; i < Usersum; i++) standings[i][3] = i + 1;
+
+    const ScrollLeft = document.getElementsByClassName('table-responsive')[0].scrollLeft;
+    showStandings();
+    NameColor();
+    NameBadge();
+    ShowStandings();
+    document.getElementsByClassName('table-responsive')[0].scrollLeft = ScrollLeft;
+}
+export function ContestStandings() {
+    ShowStandings();
+    
+    const lines = document.querySelectorAll('div#standings > div.table-responsive > table tr');
     GM_xmlhttpRequest({
         method: "GET",
         url: `/contest/${contest_id}`,
