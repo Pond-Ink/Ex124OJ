@@ -1,4 +1,4 @@
-export const version = "1.0.7";
+export const version = "1.0.8";
 
 export var BackgroundImage: string;
 export var SiteIconImage: string;
@@ -24,7 +24,7 @@ export function getVariables(callback: Function) {
     SiteIconImage = GM_getValue('SiteIconImage', '');
     SiteIconSmallImage = GM_getValue('SiteIconSmallImage', '');
     Academic = GM_getValue('Academic', false);
-    Ligatures = GM_getValue('Ligatures', false);
+    Ligatures = GM_getValue('Ligatures', true);
 
     GM_xmlhttpRequest({
         method: "GET",
