@@ -175,14 +175,20 @@ function displayStandings(initial?: boolean) {
         }
     }
 
-    const ScrollLeft = document.getElementsByClassName('table-responsive')[0].scrollLeft;
-    showStandings();
-    if (!initial) {
-        NameColor(standingsArea);
-        NameBadge(standingsArea);
+    const tableBefore = document.querySelector('div.table-responsive');
+    if (tableBefore && tableBefore.children[0]) {
+        const ScrollRight = parseInt(window.getComputedStyle(tableBefore.children[0]).width) - tableBefore.scrollLeft;
+        showStandings();
+        if (!initial) {
+            NameColor(standingsArea);
+            NameBadge(standingsArea);
+        }
+        ShowStandings();
+        const tableAfter = document.querySelector('div.table-responsive');
+        if (tableAfter && tableAfter.children[0]) {
+            tableAfter.scrollLeft = parseInt(window.getComputedStyle(tableAfter.children[0]).width) - ScrollRight;
+        }
     }
-    ShowStandings();
-    document.getElementsByClassName('table-responsive')[0].scrollLeft = ScrollLeft;
 }
 
 function NavBar(ProblemSum: number) {
@@ -232,7 +238,25 @@ export function ContestStandings() {
 div#standings > div.table-responsive > table > thead > tr > th:nth-child(n+4) {
     cursor: pointer;
 }
-div#standings > div.table-responsive > table > thead > tr > th:nth-child(-n+3),
+div#standings > div.table-responsive > table > thead > tr > th:nth-child(-n+3)::before,
+div#standings > div.table-responsive > table > tbody > tr > td:nth-child(-n+3)::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 100%;
+    width: 1px;
+    height: 100%;
+    background-color: #dee2e6;
+}
+div#standings > div.table-responsive > table > thead > tr > th:nth-child(-n+3)::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #00cc00;
+}
 div#standings > div.table-responsive > table > thead > tr > th:nth-child(n+4).checked {
     border-bottom-color: #00cc00;
 }
