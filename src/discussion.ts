@@ -30,5 +30,10 @@ export function DiscussionCard() {
 .giscus-frame {
     margin-top: 20px;
 }`);
+
+        const lanButton = document.getElementsByClassName('btn-group dropright mb-3')[0];
+        const blankLine = document.createElement('div');
+        (blankLine as HTMLElement).style.marginTop = '20px';
+        lanButton.parentNode?.insertBefore(blankLine, lanButton);
     }
 }
