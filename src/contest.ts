@@ -54,10 +54,11 @@ function PinLineHeader() {
         for (let j = 0; j < line.children.length && j < 3; j++) {
             (line.children[j] as HTMLElement).style.position = 'sticky';
             (line.children[j] as HTMLElement).style.left = x + 'px';
-            (line.children[j] as HTMLElement).style.backgroundColor = ({ 'rgba(0, 0, 0, 0)': 'rgb(255, 255, 255)', 'rgba(0, 0, 0, 0.05)': 'rgb(242.25, 242.25, 242.25)' })[window.getComputedStyle(lines[i] as HTMLElement).backgroundColor] || 'rgb(255, 255, 255)';
+            console.log(window.getComputedStyle(lines[i] as HTMLElement).backgroundColor);
+            (line.children[j] as HTMLElement).style.backgroundColor = ({ 'rgba(0, 0, 0, 0)': '#E8F8F5', 'rgba(0, 0, 0, 0.05)': '#E0F0ED' })[window.getComputedStyle(lines[i] as HTMLElement).backgroundColor] || 'rgb(255, 255, 255)';
             x = x + parseFloat(window.getComputedStyle(line.children[j]).width);
         }
-    }
+    } 
 }
 
 declare let contest_id: number;
@@ -110,25 +111,27 @@ function ShowStandings() {
     PinLineHeader();
     ProblemTitles();
 
-    const headline = document.querySelector('div#standings > div.table-responsive > table tr');
-    if (!headline) {
+    const lines = document.querySelectorAll('div#standings > div.table-responsive > table tr');
+    if (!lines.length) {
         return;
     }
 
     let sum = 0;
-    for (let i = 3; i < headline.children.length; i++) {
-        if (Problemchecked[i - 3]) {
-            (headline.children[i] as HTMLElement).classList.add('checked');
-            sum++;
-        }
-        (headline.children[i] as HTMLElement).addEventListener('click', (event) => {
-            const target = event.target as HTMLElement
-            if (target.tagName === 'A') {
-                return;
+    for (let k = 0; k < lines.length; k++) {
+        for (let i = 3; i < lines[k].children.length; i++) {
+            if (Problemchecked[i - 3]) {
+                (lines[k].children[i] as HTMLElement).classList.add('checked');
+                if (k == 0) sum++;
             }
-            Problemchecked[i - 3] = !Problemchecked[i - 3];
-            displayStandings();
-        });
+            (lines[k].children[i] as HTMLElement).addEventListener('click', (event) => {
+                const target = event.target as HTMLElement
+                if (target.tagName === 'A') {
+                    return;
+                }
+                Problemchecked[i - 3] = !Problemchecked[i - 3];
+                displayStandings();
+            });
+        }
     }
 
     if (sum == 0) {
@@ -235,9 +238,6 @@ function NavBar(ProblemSum: number) {
 
 export function ContestStandings() {
     GM_addStyle(`
-div#standings > div.table-responsive > table > thead > tr > th:nth-child(n+4) {
-    cursor: pointer;
-}
 div#standings > div.table-responsive > table > thead > tr > th:nth-child(-n+3)::before,
 div#standings > div.table-responsive > table > tbody > tr > td:nth-child(-n+3)::before {
     content: "";
@@ -248,17 +248,12 @@ div#standings > div.table-responsive > table > tbody > tr > td:nth-child(-n+3)::
     height: 100%;
     background-color: #dee2e6;
 }
-div#standings > div.table-responsive > table > thead > tr > th:nth-child(-n+3)::after {
-    content: "";
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 100%;
-    height: 2px;
-    background-color: #00cc00;
+div#standings > div.table-responsive > table > thead > tr > th:nth-child(n+4).checked,
+div#standings > div.table-responsive > table > tbody > tr:nth-of-type(even) > td:nth-child(n+4).checked {
+    background-color: #E8F8F5;
 }
-div#standings > div.table-responsive > table > thead > tr > th:nth-child(n+4).checked {
-    border-bottom-color: #00cc00;
+div#standings > div.table-responsive > table > tbody > tr:nth-of-type(odd) > td:nth-child(n+4).checked {
+    background-color: #E0F0ED;
 }
 `);
     const ProblemSum = document.querySelectorAll('div#standings > div.table-responsive > table > thead > tr > th').length - 3;
