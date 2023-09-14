@@ -1,8 +1,9 @@
 import { NameBadge, NameColor } from "./name";
+import { Darktheme } from "./variables";
 
 export function ContestsCard() {
     const content = document.querySelector('div.uoj-content');
-    
+
     if (content && content.children.length > 1) {
         const TabList = document.createElement('ul');
         content.insertBefore(TabList, content.children[0]);
@@ -32,7 +33,7 @@ export function ContestsCard() {
                 TabContent.appendChild(card);
                 card.setAttribute('class', `tab-pane${isActive ? ' active' : ''}`);
                 card.setAttribute('id', `card${counter}`);
-                
+
                 content.removeChild(content.children[i]);
 
                 counter++;
@@ -54,11 +55,10 @@ function PinLineHeader() {
         for (let j = 0; j < line.children.length && j < 3; j++) {
             (line.children[j] as HTMLElement).style.position = 'sticky';
             (line.children[j] as HTMLElement).style.left = x + 'px';
-            console.log(window.getComputedStyle(lines[i] as HTMLElement).backgroundColor);
-            (line.children[j] as HTMLElement).style.backgroundColor = ({ 'rgba(0, 0, 0, 0)': '#E8F8F5', 'rgba(0, 0, 0, 0.05)': '#E0F0ED' })[window.getComputedStyle(lines[i] as HTMLElement).backgroundColor] || 'rgb(255, 255, 255)';
+            (line.children[j] as HTMLElement).classList.add('checked');
             x = x + parseFloat(window.getComputedStyle(line.children[j]).width);
         }
-    } 
+    }
 }
 
 declare let contest_id: number;
@@ -66,7 +66,7 @@ let ContestHomepage: Document;
 function ProblemTitles() {
     let solve = () => {
         const lines = document.querySelectorAll('div#standings > div.table-responsive > table tr');
-        const problems : { [key: string]: string; } = {};
+        const problems: { [key: string]: string; } = {};
         const rows = ContestHomepage.querySelectorAll('table > tbody > tr');
         for (let i = 0; i < rows.length; i++) {
             if (rows[i].children.length >= 2) {
@@ -148,7 +148,7 @@ function displayStandings(initial?: boolean) {
     if (!standingsArea) {
         return;
     }
-    
+
     const lines = standingsArea.querySelectorAll('div.table-responsive > table tr');
     const headline = lines[0];
     const Problemsum: number = headline.children.length - 3;
@@ -202,12 +202,12 @@ function NavBar(ProblemSum: number) {
 
     const navbar = document.createElement('div');
     navtabs.before(navbar);
-    navbar.setAttribute('style', 'border-bottom: 1px solid #dee2e6;');
+    navbar.setAttribute('style', Darktheme ? 'border-bottom: 1px solid #2e2e30;' : 'border-bottom: 1px solid #dee2e6;');
 
     const floatright = document.createElement('div');
     navbar.appendChild(floatright);
     floatright.setAttribute('class', 'float-right');
-    
+
     const unselectall = document.createElement('a');
     floatright.appendChild(unselectall);
     unselectall.setAttribute('class', 'btn btn-info btn-sm');
@@ -219,7 +219,7 @@ function NavBar(ProblemSum: number) {
         displayStandings();
     });
     unselectall.innerHTML = '全选';
-    
+
     const selectall = document.createElement('a');
     floatright.appendChild(selectall);
     selectall.setAttribute('class', 'btn btn-primary btn-sm');
@@ -246,15 +246,16 @@ div#standings > div.table-responsive > table > tbody > tr > td:nth-child(-n+3)::
     right: 100%;
     width: 1px;
     height: 100%;
-    background-color: #dee2e6;
 }
-div#standings > div.table-responsive > table > thead > tr > th:nth-child(n+4).checked,
-div#standings > div.table-responsive > table > tbody > tr:nth-of-type(even) > td:nth-child(n+4).checked {
-    background-color: #E8F8F5;
+
+div#standings > div.table-responsive > table > thead > tr > th.checked, 
+div#standings > div.table-responsive > table > tbody > tr:nth-of-type(even) > td.checked {
+    background-color: ${Darktheme ? '#001f2f' : '#E8F8F5'};
 }
-div#standings > div.table-responsive > table > tbody > tr:nth-of-type(odd) > td:nth-child(n+4).checked {
-    background-color: #E0F0ED;
+div#standings > div.table-responsive > table > tbody > tr:nth-of-type(odd) > td.checked {
+    background-color: ${Darktheme ? '#003f4f' : '#E0F0ED'};
 }
+
 `);
     const ProblemSum = document.querySelectorAll('div#standings > div.table-responsive > table > thead > tr > th').length - 3;
     Problemchecked = new Array(ProblemSum).fill(true);
