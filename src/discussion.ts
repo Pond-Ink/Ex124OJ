@@ -1,4 +1,5 @@
 import { Academic } from "./variables";
+import { Darktheme } from "./variables";
 
 export function DiscussionCard() {
     const footer = document.querySelector('div.uoj-footer');
@@ -17,7 +18,7 @@ export function DiscussionCard() {
             'data-reactions-enabled': '1',
             'data-emit-metadata': '0',
             'data-input-position': 'top',
-            'data-theme': 'light',
+            'data-theme': Darktheme ? 'dark' : 'light',
             'data-lang': 'zh-CN',
             'data-loading': 'lazy',
             'crossorigin': 'anonymous',

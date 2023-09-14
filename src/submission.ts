@@ -1,3 +1,4 @@
+import { CodeCopy } from "./code";
 import { isSubmission } from "./utils";
 
 declare function sh_highlightDocument(): void;
@@ -18,7 +19,7 @@ function SubmissionCrack() {
 
 function SubmissionCard(data: { [keys: string]: { body?: string, footer?: string } }) {
     GM_addStyle(
-`div.tab-content > div.tab-pane.card {
+        `div.tab-content > div.tab-pane.card {
     border-top: none;
     border-top-right-radius: 0;
     border-top-left-radius: 0;
@@ -26,7 +27,7 @@ function SubmissionCard(data: { [keys: string]: { body?: string, footer?: string
     );
 
     const content = document.querySelector('div.uoj-content');
-    
+
     if (content && content.children.length) {
         const TabList = document.createElement('ul');
         content.insertBefore(TabList, content.children[1]);
@@ -36,7 +37,7 @@ function SubmissionCard(data: { [keys: string]: { body?: string, footer?: string
         content.insertBefore(TabContent, content.children[2]);
         TabContent.setAttribute('class', 'tab-content');
         TabContent.style.marginBottom = '20px';
-        
+
         let counter = 0, cardtitle;
         let flag = { answer: false, details: false };
         for (let i = 3; i < content.children.length; i++, counter++) {
@@ -58,7 +59,7 @@ function SubmissionCard(data: { [keys: string]: { body?: string, footer?: string
                         flag.details = true;
                     }
                 }
-                
+
                 const card = document.createElement('div');
                 TabContent.appendChild(card);
                 card.setAttribute('class', `tab-pane card${isActive ? ' active' : ''}`);
@@ -98,7 +99,7 @@ function SubmissionCard(data: { [keys: string]: { body?: string, footer?: string
             TabList.appendChild(title);
             title.setAttribute('class', 'nav-item');
             title.innerHTML = `<a class="nav-link${isActive ? ' active' : ''}" href="#card${counter}" role="tab" data-toggle="tab" aria-selected="true">Answer</a>`;
-            
+
             const card = document.createElement('div');
             TabContent.appendChild(card);
             card.setAttribute('class', `tab-pane card${isActive ? ' active' : ''}`);
@@ -116,7 +117,7 @@ function SubmissionCard(data: { [keys: string]: { body?: string, footer?: string
                 (card_body as HTMLElement).innerHTML = data.answer.footer;
                 card.appendChild(card_body);
             }
-            
+
             counter++;
         }
         if (!flag.details) {
@@ -126,7 +127,7 @@ function SubmissionCard(data: { [keys: string]: { body?: string, footer?: string
             TabList.appendChild(title);
             title.setAttribute('class', 'nav-item');
             title.innerHTML = `<a class="nav-link${isActive ? ' active' : ''}" href="#card${counter}" role="tab" data-toggle="tab" aria-selected="true">详细</a>`;
-            
+
             const card = document.createElement('div');
             TabContent.appendChild(card);
             card.setAttribute('class', `tab-pane card${isActive ? ' active' : ''}`);
@@ -138,11 +139,12 @@ function SubmissionCard(data: { [keys: string]: { body?: string, footer?: string
                 (card_body as HTMLElement).innerHTML = data.details.body;
                 card.appendChild(card_body);
             }
-            
+
             counter++;
         }
 
         sh_highlightDocument();
+        CodeCopy();
     }
 }
 

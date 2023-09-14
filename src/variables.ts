@@ -1,10 +1,12 @@
-export const version = "1.0.12";
+export const version = "1.1.0";
 
 export var BackgroundImage: string;
 export var SiteIconImage: string;
 export var SiteIconSmallImage: string;
 export var Academic: boolean;
 export var Ligatures: boolean;
+export var DarkthemeSelect: "follow" | "light" | "dark";
+export var Darktheme: boolean;
 
 export var NameColorList: { [key: string]: string[]; };
 export var CCFBadgeList: { [key: string]: string[]; };
@@ -25,6 +27,8 @@ export function getVariables(callback: Function) {
     SiteIconSmallImage = GM_getValue('SiteIconSmallImage', '');
     Academic = GM_getValue('Academic', false);
     Ligatures = GM_getValue('Ligatures', true);
+    DarkthemeSelect = GM_getValue('Darktheme', "follow");
+    Darktheme = (DarkthemeSelect == 'light' || DarkthemeSelect == 'dark') ? DarkthemeSelect == 'dark' : (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
 
     GM_xmlhttpRequest({
         method: "GET",

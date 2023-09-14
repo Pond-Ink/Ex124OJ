@@ -1,4 +1,4 @@
-import { NameColorList, CCFBadgeList, TagBadgeList } from "./variables";
+import { NameColorList, CCFBadgeList, TagBadgeList, Darktheme } from "./variables";
 
 export function NameColor(where?: Document | HTMLElement) {
     if (!where) {
