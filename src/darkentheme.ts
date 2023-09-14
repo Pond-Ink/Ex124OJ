@@ -145,10 +145,10 @@ body {
 .blog-content-md-editor-toolbar {
     background: #343a40
 }
-
         `);
-
-        replaceClassName('navbar-light', 'navbar-dark');
-        replaceClassName('bg-light', 'bg-dark');
+        document.addEventListener("DOMContentLoaded",  () => {
+            replaceClassName('navbar-light', 'navbar-dark');
+            replaceClassName('bg-light', 'bg-dark');
+        });
     }
 }

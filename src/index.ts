@@ -21,22 +21,35 @@ import { changeGravatarURL } from "./gravatar";
     'use strict';
 
     getVariables(() => {
-        Settings();
-        NameColor();
-        NameBadge(); 
+        const tasks = () => {
+            Settings();
+            NameColor();
+            NameBadge(); 
+        };
+        if (document.readyState === "complete" || document.readyState === "interactive") {
+            tasks();
+        } else {
+            document.addEventListener("DOMContentLoaded", () => {
+                tasks();
+            });
+        }
     });
+
     DarkenTheme();
-    FontAwesome();
-    Background();
-    changeIcon();
-    DiscussionCard();
-    CodeBlock();
-    TableStyle();
-    RandomProblem();
-    if (isHomepage()) exAnnouncements();
-    if (isSubmission()) Submission();
-    if (isContests()) ContestsCard();
-    if (isStandings()) ContestStandings();
-    if (isProblem()) downloadData();
-    if (isUserProfile() || isBlog()) changeGravatarURL();
+
+    document.addEventListener('DOMContentLoaded', () => {
+        FontAwesome();
+        Background();
+        changeIcon();
+        DiscussionCard();
+        CodeBlock();
+        TableStyle();
+        RandomProblem();
+        if (isHomepage()) exAnnouncements();
+        if (isSubmission()) Submission();
+        if (isContests()) ContestsCard();
+        if (isStandings()) ContestStandings();
+        if (isProblem()) downloadData();
+        if (isUserProfile() || isBlog()) changeGravatarURL();
+    });
 })();

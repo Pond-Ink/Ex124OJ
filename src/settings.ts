@@ -1,4 +1,4 @@
-import { version, BackgroundImage, SiteIconImage, SiteIconSmallImage, Academic, Ligatures, Darktheme } from "./variables";
+import { version, BackgroundImage, SiteIconImage, SiteIconSmallImage, Academic, Ligatures, Darktheme, DarkthemeSelect } from "./variables";
 
 export function Settings() {
     GM_addStyle(
@@ -187,18 +187,21 @@ input:checked + .slider:before {
     const darkthemeLabel = document.createElement('strong');
     darktheme.appendChild(darkthemeLabel);
     darkthemeLabel.setAttribute('style', 'font-size: 1.25em; vertical-align: middle;');
-    darkthemeLabel.innerHTML = '暗色主题&emsp;&emsp;&emsp;&emsp;';
-    const darkthemeSwitch = document.createElement('label');
-    darkthemeSwitch.className = 'switch';
-    darktheme.appendChild(darkthemeSwitch);
-    darkthemeSwitch.innerHTML = '<input type="checkbox" id="DarkthemeSwitch" style="display: none;">\n<i id="DarkthemeSwitchIcon" class="slider"></i>';
+    darkthemeLabel.innerHTML = '主题风格&emsp;&emsp;&emsp;&emsp;';
+    const darkthemeSelect = document.createElement('select');
+    darktheme.appendChild(darkthemeSelect);
+    darkthemeSelect.classList.add('form-control');
+    darkthemeSelect.style.display = 'inline-block';
+    darkthemeSelect.style.width = 'unset';
+    darkthemeSelect.style.verticalAlign = 'middle';
+    darkthemeSelect.innerHTML = '<option value="follow">跟随系统</option><option value="light">Light</option><option value="dark">Dark</option>';
 
     backgroundImageInput.value = BackgroundImage;
     siteIconImageInput.value = SiteIconImage;
     siteIconSmallImageInput.value = SiteIconSmallImage;
     (document.getElementById('AcademicSwitch') as HTMLInputElement).checked = Academic;
     (document.getElementById('LigaturesSwitch') as HTMLInputElement).checked = Ligatures;
-    (document.getElementById('DarkthemeSwitch') as HTMLInputElement).checked = Darktheme;
+    darkthemeSelect.value = DarkthemeSelect;
 
     const FooterRow = document.createElement('div');
     FooterRow.setAttribute('class', 'settings-footerbar');
@@ -213,7 +216,7 @@ input:checked + .slider:before {
         GM_setValue('SiteIconSmallImage', siteIconSmallImageInput.value);
         GM_setValue('Academic', (document.getElementById('AcademicSwitch') as HTMLInputElement).checked);
         GM_setValue('Ligatures', (document.getElementById('LigaturesSwitch') as HTMLInputElement).checked);
-        GM_setValue('Darktheme', (document.getElementById('DarkthemeSwitch') as HTMLInputElement).checked);
+        GM_setValue('Darktheme', darkthemeSelect.value);
         location.reload();
     };
     const Clear = document.createElement('button');

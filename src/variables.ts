@@ -5,6 +5,7 @@ export var SiteIconImage: string;
 export var SiteIconSmallImage: string;
 export var Academic: boolean;
 export var Ligatures: boolean;
+export var DarkthemeSelect: "follow" | "light" | "dark";
 export var Darktheme: boolean;
 
 export var NameColorList: { [key: string]: string[]; };
@@ -26,7 +27,8 @@ export function getVariables(callback: Function) {
     SiteIconSmallImage = GM_getValue('SiteIconSmallImage', '');
     Academic = GM_getValue('Academic', false);
     Ligatures = GM_getValue('Ligatures', true);
-    Darktheme = GM_getValue('Darktheme', false);
+    DarkthemeSelect = GM_getValue('Darktheme', "follow");
+    Darktheme = (DarkthemeSelect == 'light' || DarkthemeSelect == 'dark') ? DarkthemeSelect == 'dark' : (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
 
     GM_xmlhttpRequest({
         method: "GET",
