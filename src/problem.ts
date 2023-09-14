@@ -1,8 +1,9 @@
 import { isProblem } from "./utils";
+import { Darktheme } from "./variables";
 
 export function downloadData() {
     GM_addStyle(
-`.partly-hidden {
+        `.partly-hidden {
     transition: opacity 125ms;
 }
 .partly-hidden:not(:hover) {
@@ -15,7 +16,7 @@ export function downloadData() {
     if (tabcontent) {
         const navbar = document.createElement('div');
         tabcontent.before(navbar);
-        navbar.setAttribute('style', 'border-bottom: 1px solid #dee2e6;');
+        navbar.setAttribute('style', 'border-bottom: 1px solid ' + (Darktheme ? '#2e2e30' : '#dee2e6;'));
         const statisticsButton = document.querySelector('div.uoj-content > a[role=button]');
         if (statisticsButton) navbar.appendChild(statisticsButton);
 

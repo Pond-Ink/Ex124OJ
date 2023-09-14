@@ -1,8 +1,8 @@
-import { version, BackgroundImage, SiteIconImage, SiteIconSmallImage, Academic, Ligatures } from "./variables";
+import { version, BackgroundImage, SiteIconImage, SiteIconSmallImage, Academic, Ligatures, Darktheme, DarkthemeSelect } from "./variables";
 
 export function Settings() {
     GM_addStyle(
-`.settings-overlay {
+        `.settings-overlay {
     position: fixed;
     height: 100%;
     width: 100%;
@@ -13,7 +13,7 @@ export function Settings() {
     z-index: 229;
 }
 .settings-popup-active .settings-overlay {
-    background: rgb(0,0,0,.3);
+    background: ${Darktheme ? 'rgb(255,255,255,.3)' : 'rgb(0,0,0,.3)'};
     visibility: visible;
 }
 .settings-popup {
@@ -27,7 +27,7 @@ export function Settings() {
     padding: 20px 20px;
 }
 .settings-popup-active .settings-overlay .settings-popup {
-    background: #ffffff;
+    background: ${Darktheme ? '#0d1117' : '#ffffff'};
     visibility: visible;
 }
 .settings-popup .row {
@@ -68,7 +68,7 @@ export function Settings() {
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: #ccc;
+    background-color: ${Darktheme ? '#333' : '#ccc'};
     transition: background-color .4s;
     transition: visiblility 0s;
     border-radius: 28px;
@@ -81,7 +81,7 @@ export function Settings() {
     width: 20px;
     left: 4px;
     bottom: 4px;
-    background-color: white;
+    background-color: ${Darktheme ? '#0d1117' : '#ffffff'};
     transition: .4s;
     border-radius: 50%;
 }
@@ -97,7 +97,7 @@ input:checked + .slider:before {
     NavBarTablist!.insertBefore(HomepageEntrance, NavBarTablist!.firstChild);
     HomepageEntrance.setAttribute('class', 'nav-item');
     HomepageEntrance.innerHTML = '<span style="padding: 0.5rem 1rem; cursor:pointer"><span style="background-color: #28adca;padding:0.2em 0.6em;border-radius: 1em;color:#fff;font-size: 0.7em;font-weight:bold;display:inline-block;position: relative;top: 50%;transform: translate(0,-50%);">Ex124OJ</span></span>';
-    HomepageEntrance.onclick = function() {
+    HomepageEntrance.onclick = function () {
         document.body.setAttribute('class', 'settings-popup-active');
     }
     const SettingsOverlay = document.createElement('div');
@@ -158,7 +158,6 @@ input:checked + .slider:before {
 
     const academic = document.createElement('div');
     Switchs.appendChild(academic);
-    // academic.setAttribute('style', 'vertical-align: middle');
     const academicLabel = document.createElement('strong');
     academic.appendChild(academicLabel);
     academicLabel.setAttribute('style', 'font-size: 1.25em; vertical-align: middle;');
@@ -172,7 +171,6 @@ input:checked + .slider:before {
 
     const ligatures = document.createElement('div');
     Switchs.appendChild(ligatures);
-    // academic.setAttribute('style', 'vertical-align: middle');
     const ligaturesLabel = document.createElement('strong');
     ligatures.appendChild(ligaturesLabel);
     ligaturesLabel.setAttribute('style', 'font-size: 1.25em; vertical-align: middle;');
@@ -182,11 +180,28 @@ input:checked + .slider:before {
     ligatures.appendChild(ligaturesSwitch);
     ligaturesSwitch.innerHTML = '<input type="checkbox" id="LigaturesSwitch" style="display: none;">\n<i id="LigaturesSwitchIcon" class="slider"></i>';
 
+    { const space = document.createElement('p'); Switchs.appendChild(space); space.innerHTML = '&emsp;&emsp;&emsp;&emsp;' }
+
+    const darktheme = document.createElement('div');
+    Switchs.appendChild(darktheme);
+    const darkthemeLabel = document.createElement('strong');
+    darktheme.appendChild(darkthemeLabel);
+    darkthemeLabel.setAttribute('style', 'font-size: 1.25em; vertical-align: middle;');
+    darkthemeLabel.innerHTML = '主题风格&emsp;&emsp;&emsp;&emsp;';
+    const darkthemeSelect = document.createElement('select');
+    darktheme.appendChild(darkthemeSelect);
+    darkthemeSelect.classList.add('form-control');
+    darkthemeSelect.style.display = 'inline-block';
+    darkthemeSelect.style.width = 'unset';
+    darkthemeSelect.style.verticalAlign = 'middle';
+    darkthemeSelect.innerHTML = '<option value="follow">跟随系统</option><option value="light">Light</option><option value="dark">Dark</option>';
+
     backgroundImageInput.value = BackgroundImage;
     siteIconImageInput.value = SiteIconImage;
     siteIconSmallImageInput.value = SiteIconSmallImage;
     (document.getElementById('AcademicSwitch') as HTMLInputElement).checked = Academic;
     (document.getElementById('LigaturesSwitch') as HTMLInputElement).checked = Ligatures;
+    darkthemeSelect.value = DarkthemeSelect;
 
     const FooterRow = document.createElement('div');
     FooterRow.setAttribute('class', 'settings-footerbar');
@@ -195,19 +210,20 @@ input:checked + .slider:before {
     FooterRow.appendChild(Ok);
     Ok.setAttribute('class', 'btn btn-search btn-outline-primary float-right');
     Ok.innerHTML = '保存';
-    Ok.onclick = function() {
+    Ok.onclick = function () {
         GM_setValue('BackgroundImage', backgroundImageInput.value);
         GM_setValue('SiteIconImage', siteIconImageInput.value);
         GM_setValue('SiteIconSmallImage', siteIconSmallImageInput.value);
         GM_setValue('Academic', (document.getElementById('AcademicSwitch') as HTMLInputElement).checked);
         GM_setValue('Ligatures', (document.getElementById('LigaturesSwitch') as HTMLInputElement).checked);
+        GM_setValue('Darktheme', darkthemeSelect.value);
         location.reload();
     };
     const Clear = document.createElement('button');
     FooterRow.appendChild(Clear);
     Clear.setAttribute('class', 'btn btn-search btn-outline-primary float-right');
     Clear.innerHTML = '恢复默认';
-    Clear.onclick = function() {
+    Clear.onclick = function () {
         const values = GM_listValues();
         for (const value in values) {
             GM_deleteValue(values[value]);

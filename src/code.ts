@@ -1,11 +1,20 @@
-import { Ligatures } from "./variables";
+import { Darktheme, Ligatures } from "./variables";
 
 export function CodeBlock() {
     GM_addStyle(
-`@import url(https://cdn.jsdelivr.net/npm/firacode@6.2.0/distr/fira_code.css);
+        `@import url(https://cdn.jsdelivr.net/npm/firacode@6.2.0/distr/fira_code.css);
 code {
     font-family: "Fira Code";
     ${Ligatures ? '' : 'font-variant-ligatures: none;'}
+}
+.card {
+    ${Darktheme ? 'border-color: rgba(255,255,255,.125);' : ''}
+}
+.card-footer {
+    ${Darktheme ? 'border-color: rgba(255,255,255,.03);' : ''}
+}
+pre, pre.sh_sourceCode {
+    ${Darktheme ? 'color: #e0e0e0; background-color: #0d1117; border-color: #2e2e30;' : ''}
 }
 code.sh_cpp>span {
     font-style: normal !important;
@@ -42,7 +51,7 @@ code.sh_cpp>span.sh_comment {
     position: absolute;
     top: 0;
     right: 0;
-    background-color: rgb(0,0,0,.1);
+    background-color: ${Darktheme ? 'rgb(255,255,255,.1)' : 'rgb(0,0,0,.1)'};
     border: 0 solid transparent;
     border-bottom-left-radius: .28571429rem;
 }
@@ -53,6 +62,10 @@ code.sh_cpp>span.sh_comment {
     outline: none;
 }`);
 
+    CodeCopy();
+}
+
+export function CodeCopy() {
     if (!(/^.*\/manage\/statement(\?.*){0,1}$/).test(window.location.href)) {
         const CodeBlocks = document.getElementsByTagName('pre');
         for (const cb in CodeBlocks) {
@@ -63,6 +76,7 @@ code.sh_cpp>span.sh_comment {
                 CodeBlocks[cb].insertBefore(CopyButton, CodeBlocks[cb].children[0]);
                 CopyButton.setAttribute('class', 'copybutton');
                 CopyButton.setAttribute('id', `copybutton${cb}`);
+                if (Darktheme) CopyButton.setAttribute('style', `color: white;`);
                 CopyButton.innerHTML = '<i class="fa-solid fa-copy"></i>';
                 CopyButton.onclick = () => {
                     GM_setClipboard(Content, 'text');

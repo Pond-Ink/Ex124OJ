@@ -20,6 +20,7 @@ const metadata =
 // @grant        GM_listValues
 // @grant        GM_xmlhttpRequest
 // @connect      ex124oj.pond.ink
+// @run-at       document-start
 // ==/UserScript==
 `;
 
