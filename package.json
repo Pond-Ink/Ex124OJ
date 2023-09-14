@@ -1,6 +1,6 @@
 {
   "name": "ex124oj",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "description": "Extend 124OJ!",
   "main": "index.js",
   "scripts": {

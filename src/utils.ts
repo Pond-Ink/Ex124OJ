@@ -3,17 +3,17 @@ export function isHomepage() {
     return window.location.href.match(HomepageRegExp);
 }
 
-const submissionRegExp = /^http:\/\/124.221.194.184\/submission\/\d+(\?.*)?$/;
+const submissionRegExp = /^http:\/\/124.221.194.184\/submission\/(\d+)(\?.*)?$/;
 export function isSubmission() {
     return window.location.href.match(submissionRegExp);
 }
 
-const ContestsRegExp = /^http:\/\/124.221.194.184\/contests(\/)?(\?.*)?$/;
+const ContestsRegExp = /^http:\/\/124.221.194.184\/contests(\?.*)?$/;
 export function isContests() {
     return window.location.href.match(ContestsRegExp);
 }
 
-const StandingsRegExp = /^http:\/\/124.221.194.184\/contest\/(\d+)\/standings(\/)?(\?.*)?$/;
+const StandingsRegExp = /^http:\/\/124.221.194.184\/contest\/(\d+)\/standings(\?.*)?$/;
 export function isStandings() {
     return window.location.href.match(StandingsRegExp);
 }
