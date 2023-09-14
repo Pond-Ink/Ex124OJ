@@ -34,7 +34,7 @@ export function NameBadge(where?: Document | HTMLElement) {
         }
         if (TagBadgeList[name]) {
             for (const j in TagBadgeList[name]) {
-                Names[i].innerHTML += ` ${tagbadgecode(TagBadgeList[name][j].color + (Darktheme ? '80' : ''), TagBadgeList[name][j].text)}`;
+                Names[i].innerHTML += ` ${tagbadgecode(TagBadgeList[name][j].color, TagBadgeList[name][j].text)}`;
             }
         }
     }

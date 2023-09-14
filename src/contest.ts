@@ -251,10 +251,10 @@ div#standings > div.table-responsive > table > tbody > tr > td:nth-child(-n+3)::
 
 div#standings > div.table-responsive > table > thead > tr > th.checked, 
 div#standings > div.table-responsive > table > tbody > tr:nth-of-type(even) > td.checked {
-    background-color: ${Darktheme ? '#192523' : '#F9F5FB'};
+    background-color: ${Darktheme ? '#192523' : '#F4FFFF'};
 }
 div#standings > div.table-responsive > table > tbody > tr:nth-of-type(odd) > td.checked {
-    background-color: ${Darktheme ? '#1F2B29' : '#F4ECF7'};
+    background-color: ${Darktheme ? '#1F2B29' : '#F0FFFF'};
 }
 
 `);

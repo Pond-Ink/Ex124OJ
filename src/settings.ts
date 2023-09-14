@@ -86,7 +86,7 @@ export function Settings() {
     border-radius: 50%;
 }
 input:checked + .slider {
-    background-color: ${Darktheme ? '#28ADCAc0' : '#28ADCA'};
+    background-color: #28ADCA;
 }
 input:checked + .slider:before {
     transform: translateX(32px);
@@ -96,7 +96,7 @@ input:checked + .slider:before {
     const NavBarTablist = document.querySelector('div[role=main] > div > ul[role=tablist]');
     NavBarTablist!.insertBefore(HomepageEntrance, NavBarTablist!.firstChild);
     HomepageEntrance.setAttribute('class', 'nav-item');
-    HomepageEntrance.innerHTML = '<span style="padding: 0.5rem 1rem; cursor:pointer"><span style="background-color: #28adca' + (Darktheme ? 'a0' : '') + ';padding:0.2em 0.6em;border-radius: 1em;color:#fff;font-size: 0.7em;font-weight:bold;display:inline-block;position: relative;top: 50%;transform: translate(0,-50%);">Ex124OJ</span></span>';
+    HomepageEntrance.innerHTML = '<span style="padding: 0.5rem 1rem; cursor:pointer"><span style="background-color: #28adca;padding:0.2em 0.6em;border-radius: 1em;color:#fff;font-size: 0.7em;font-weight:bold;display:inline-block;position: relative;top: 50%;transform: translate(0,-50%);">Ex124OJ</span></span>';
     HomepageEntrance.onclick = function () {
         document.body.setAttribute('class', 'settings-popup-active');
     }
@@ -109,7 +109,7 @@ input:checked + .slider:before {
     const SettingsTitlebar = document.createElement('div');
     SettingsPopup.appendChild(SettingsTitlebar);
     SettingsTitlebar.setAttribute('class', 'row settings-titlebar');
-    SettingsTitlebar.innerHTML = '<h3 style="width:100%;height:3.5rem"><img src="https://ex124oj.pond.ink/images/icon.png" style="height:3.5rem;width:3.5rem;margin-right:10px"><span style="vertical-align:middle"> Ex124OJ 控制面板</span> <span style="vertical-align:middle;cursor:pointer;margin:0 10px" onclick="window.open(\'https://ex124oj.pond.ink/\');"><span style="height:1.75rem;line-height:3.5rem;vertical-align:middle;padding:0 .5rem;background-color:#28adca' + (Darktheme ? 'a0' : '') + ';border-radius:1em;color:#fff;font-size:1.2rem;font-weight:bold">Ex124OJ</span></span><span style="color:#7f7f7f;line-height:3.5rem;vertical-align:middle;font-size:1.2rem">' + version + '</span></h3>';
+    SettingsTitlebar.innerHTML = '<h3 style="width:100%;height:3.5rem"><img src="https://ex124oj.pond.ink/images/icon.png" style="height:3.5rem;width:3.5rem;margin-right:10px"><span style="vertical-align:middle"> Ex124OJ 控制面板</span> <span style="vertical-align:middle;cursor:pointer;margin:0 10px" onclick="window.open(\'https://ex124oj.pond.ink/\');"><span style="height:1.75rem;line-height:3.5rem;vertical-align:middle;padding:0 .5rem;background-color:#28adca;border-radius:1em;color:#fff;font-size:1.2rem;font-weight:bold">Ex124OJ</span></span><span style="color:#7f7f7f;line-height:3.5rem;vertical-align:middle;font-size:1.2rem">' + version + '</span></h3>';
     const SettingsCloseButton = document.createElement('span');
     SettingsPopup.appendChild(SettingsCloseButton);
     SettingsCloseButton.setAttribute('style', 'position: fixed;right: 20px;top:20px;cursor: pointer');
