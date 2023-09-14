@@ -2,6 +2,7 @@
 
 import { isHomepage, isSubmission, isContests, isStandings, isProblem, isUserProfile, isBlog } from "./utils";
 import { getVariables } from "./variables";
+import { DarkenTheme } from "./darkentheme";
 import { Settings } from "./settings";
 import { NameColor, NameBadge } from "./name";
 import { FontAwesome } from "./fontawesome";
@@ -24,6 +25,7 @@ import { changeGravatarURL } from "./gravatar";
         NameColor();
         NameBadge(); 
     });
+    DarkenTheme();
     FontAwesome();
     Background();
     changeIcon();

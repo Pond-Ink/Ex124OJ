@@ -5,6 +5,7 @@ export var SiteIconImage: string;
 export var SiteIconSmallImage: string;
 export var Academic: boolean;
 export var Ligatures: boolean;
+export var Darktheme: boolean;
 
 export var NameColorList: { [key: string]: string[]; };
 export var CCFBadgeList: { [key: string]: string[]; };
@@ -25,6 +26,7 @@ export function getVariables(callback: Function) {
     SiteIconSmallImage = GM_getValue('SiteIconSmallImage', '');
     Academic = GM_getValue('Academic', false);
     Ligatures = GM_getValue('Ligatures', true);
+    Darktheme = GM_getValue('Darktheme', false);
 
     GM_xmlhttpRequest({
         method: "GET",
