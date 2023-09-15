@@ -20,25 +20,28 @@ import { changeGravatarURL } from "./gravatar";
 (function() {
     'use strict';
 
+    let flag = false;
+
     getVariables(() => {
         const tasks = () => {
             Settings();
             NameColor();
             NameBadge(); 
         };
-        if (document.readyState === "complete" || document.readyState === "interactive") {
+        if (flag) {
             tasks();
         } else {
-            document.addEventListener("DOMContentLoaded", () => {
+            window.onload = () => {
                 tasks();
-            });
+                if (isStandings()) ContestStandings();
+            };
         }
     });
 
     DarkenTheme();
+    FontAwesome();
 
     document.addEventListener('DOMContentLoaded', () => {
-        FontAwesome();
         Background();
         changeIcon();
         DiscussionCard();
@@ -48,8 +51,12 @@ import { changeGravatarURL } from "./gravatar";
         if (isHomepage()) exAnnouncements();
         if (isSubmission()) Submission();
         if (isContests()) ContestsCard();
-        if (isStandings()) ContestStandings();
         if (isProblem()) downloadData();
-        if (isUserProfile() || isBlog()) changeGravatarURL();
+        if (isUserProfile() || isBlog()) changeGravatarURL();  
     });
+
+    window.onload = () => {
+        flag = true;
+        if (isStandings()) ContestStandings();
+    };
 })();
