@@ -27,7 +27,7 @@ code {
     ${Darktheme ? 'border-color: rgba(255,255,255,.03);' : ''}
 }
 pre, pre.sh_sourceCode {
-    ${Darktheme ? 'color: #e0e0e0; background-color: #0d1117; border-color: #2e2e30;' : ''}
+    ${Darktheme ? 'color: #e0e0e0!important; background-color: #0d1117!important; border-color: #2e2e30!important;' : ''}
 }
 code.sh_cpp>span {
     font-style: normal !important;
