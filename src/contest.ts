@@ -182,10 +182,10 @@ function displayStandings(initial?: boolean) {
     if (tableBefore && tableBefore.children[0]) {
         const ScrollRight = parseInt(window.getComputedStyle(tableBefore.children[0]).width) - tableBefore.scrollLeft;
         showStandings();
-        if (!initial) {
+        // if (!initial) {
             NameColor(standingsArea);
             NameBadge(standingsArea);
-        }
+        // }
         ShowStandings();
         const tableAfter = document.querySelector('div.table-responsive');
         if (tableAfter && tableAfter.children[0]) {
