@@ -1,5 +1,6 @@
 import { NameBadge, NameColor } from "./name";
 import { Darktheme } from "./variables";
+import { isContest } from "./utils";
 
 export function ContestsCard() {
     const content = document.querySelector('div.uoj-content');
@@ -44,6 +45,31 @@ export function ContestsCard() {
             }
             i--;
         }
+    }
+}
+
+export function ContestHome() {
+    const content = document.querySelector('div.uoj-content');
+    if (content && content.querySelectorAll('div').length < 2) {
+        GM_xmlhttpRequest({
+            method: "GET",
+            url: `https://ex124oj.pond.ink/api/contest/${isContest()![1]}`,
+            revalidate: true,
+            onload: (data) => {
+                if (data.status == 200) {
+                    const res = JSON.parse(data.response);
+                    const title = document.querySelector('head > title');
+                    if (title && res.title) {
+                        title.innerHTML = res.title;
+                    }
+                    const content = document.querySelector('div.uoj-content');
+                    if (content && res.content) {
+                        content.innerHTML = res.content;
+                        eval('$(".countdown").countdown();');
+                    }
+                }
+            }
+        });
     }
 }
 

@@ -13,12 +13,17 @@ export function isContests() {
     return window.location.href.match(ContestsRegExp);
 }
 
+const ContestRegExp = /^http:\/\/124.221.194.184\/contest\/(\d+)(\?.*)?$/;
+export function isContest() {
+    return window.location.href.match(ContestRegExp);
+}
+
 const StandingsRegExp = /^http:\/\/124.221.194.184\/contest\/(\d+)\/standings(\?.*)?$/;
 export function isStandings() {
     return window.location.href.match(StandingsRegExp);
 }
 
-const ProblemRegExp = /^http:\/\/124.221.194.184.*\/problem\/(\d+)(\?.*)?$/;
+const ProblemRegExp = /^http:\/\/124.221.194.184(\/contest\/(\d+))?\/problem\/(\d+)(\?.*)?$/;
 export function isProblem() {
     return window.location.href.match(ProblemRegExp);
 }
