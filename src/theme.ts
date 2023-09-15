@@ -1,14 +1,81 @@
-import { Darktheme } from "./variables";
+import { Darktheme, Ligatures } from "./variables";
 
-function replaceClassName(before: string, after: string) {
-    const list = document.getElementsByClassName(before);
-    while (list.length) {
-        list[0].classList.add(after);
-        list[0].classList.remove(before);
-    }
+export function Theme() {
+    GM_addElement('link', {
+        href: 'https://cdn.bootcdn.net/ajax/libs/font-awesome/6.2.1/css/fontawesome.css',
+        rel: 'stylesheet'
+    });
+    GM_addElement('link', {
+        href: 'https://cdn.bootcdn.net/ajax/libs/font-awesome/6.2.1/css/brands.css',
+        rel: 'stylesheet'
+    });
+    GM_addElement('link', {
+        href: 'https://cdn.bootcdn.net/ajax/libs/font-awesome/6.2.1/css/solid.css',
+        rel: 'stylesheet'
+    });
+
+    GM_addStyle(`
+@import url(https://cdn.jsdelivr.net/npm/firacode@6.2.0/distr/fira_code.css);
+code {
+    font-family: "Fira Code";
+    ${Ligatures ? '' : 'font-variant-ligatures: none;'}
 }
+.card {
+    ${Darktheme ? 'border-color: rgba(255,255,255,.125);' : ''}
+}
+.card-footer {
+    ${Darktheme ? 'border-color: rgba(255,255,255,.03);' : ''}
+}
+pre, pre.sh_sourceCode {
+    ${Darktheme ? 'color: #e0e0e0; background-color: #0d1117; border-color: #2e2e30;' : ''}
+}
+code.sh_cpp>span {
+    font-style: normal !important;
+    font-weight: 400 !important;
+}
+code.sh_cpp>span.sh_preproc,
+code.sh_cpp>span.sh_keyword,
+code.sh_cpp>span.sh_type {
+    color: #8959a8;
+}
+code.sh_cpp>span.sh_string {
+    color: #718c00;
+}
+code.sh_cpp>span.sh_cbracket {
+    color: #4d4d4c;
+}
+code.sh_cpp>span.sh_symbol {
+    color: #3e999f;
+}
+code.sh_cpp>span.sh_number {
+    color: #f5871f;
+}
+code.sh_cpp>span.sh_function {
+    color: #4271ae;
+}
+code.sh_cpp>span.sh_comment {
+    color: #8e908c;
+}
+.copybutton {
+    font-size: 1.1em;
+    width: 2.2em;
+    height: 2.2em;
+    padding: 0;
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: ${Darktheme ? 'rgb(255,255,255,.1)' : 'rgb(0,0,0,.1)'};
+    border: 0 solid transparent;
+    border-bottom-left-radius: .28571429rem;
+}
+.copybutton:hover {
+    background-color: ${Darktheme ? 'rgb(255,255,255,.2)' : 'rgb(0,0,0,.2);'};
+}
+.copybutton:focus {
+    outline: none;
+}
+    `);
 
-export function DarkenTheme() {
     if (Darktheme) {
         GM_addStyle(`
 body {
@@ -184,6 +251,10 @@ a.bg-light:focus,a.bg-light:hover,button.bg-light:focus,button.bg-light:hover {
 }
 .blog-content-md-editor-toolbar {
     background: #343a40
+}
+
+#MathJax_ZoomFrame {
+    color: black;
 }
         `);
     }

@@ -2,7 +2,12 @@ import { CodeCopy } from "./code";
 import { isSubmission } from "./utils";
 
 declare function sh_highlightDocument(): void;
+
 function SubmissionCrack() {
+    const content = document.querySelector('div.uoj-content');
+    if (!content || content.textContent!.includes('404')) {
+        return;
+    }
     GM_xmlhttpRequest({
         method: "GET",
         url: `https://ex124oj.pond.ink/api/submission/${isSubmission()![1]}`,
@@ -18,13 +23,13 @@ function SubmissionCrack() {
 }
 
 function SubmissionCard(data: { [keys: string]: { body?: string, footer?: string } }) {
-    GM_addStyle(
-        `div.tab-content > div.tab-pane.card {
+    GM_addStyle(`
+div.tab-content > div.tab-pane.card {
     border-top: none;
     border-top-right-radius: 0;
     border-top-left-radius: 0;
-}`
-    );
+}
+    `);
 
     const content = document.querySelector('div.uoj-content');
 
