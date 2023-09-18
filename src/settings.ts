@@ -27,7 +27,7 @@ export function Settings() {
     padding: 20px 20px;
 }
 .settings-popup-active .settings-overlay .settings-popup {
-    background: ${Darktheme ? '#0d1117' : '#ffffff'};
+    background: ${Darktheme ? '#222' : '#ffffff'};
     visibility: visible;
 }
 .settings-popup .row {
@@ -81,7 +81,7 @@ export function Settings() {
     width: 20px;
     left: 4px;
     bottom: 4px;
-    background-color: ${Darktheme ? '#0d1117' : '#ffffff'};
+    background-color: ${Darktheme ? '#222' : '#ffffff'};
     transition: .4s;
     border-radius: 50%;
 }
