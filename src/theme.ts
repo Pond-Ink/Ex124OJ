@@ -150,6 +150,13 @@ a.bg-light:focus,a.bg-light:hover,button.bg-light:focus,button.bg-light:hover {
     border-bottom-color: rgba(255,255,255,.125);
 }
 
+.card-uoj-accepted>.card-header,
+.card-uoj-wrong>.card-header,
+.card-uoj-acceptable-answer>.card-header,
+.card-uoj-tle>.card-header {
+    opacity: 0.9;
+}
+
 .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
     color: #f2eee8;
     background-color: #222;
@@ -166,7 +173,7 @@ a.bg-light:focus,a.bg-light:hover,button.bg-light:focus,button.bg-light:hover {
     opacity: 0.9;!important;
 }
 .btn-info, .btn-primary, .btn-warning, .btn-danger {
-    opacity: 0.8;
+    opacity: 0.9;
 }
 
 .bootstrap-switch .bootstrap-switch-handle-on, .bootstrap-switch .bootstrap-switch-handle-off, .bootstrap-switch .bootstrap-switch-label {

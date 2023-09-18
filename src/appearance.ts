@@ -1,31 +1,22 @@
-import { BackgroundImage,SiteIconImage, SiteIconSmallImage } from "./variables";
+import { BackgroundImage, SiteIconImage, SiteIconSmallImage, Darktheme } from "./variables";
 
 export function Background() {
     if (BackgroundImage) {
-        document.getElementsByClassName('navbar-brand')[0].innerHTML = '<img src="/images/logo_small.png" alt="Logo" class="img-rounded" style="width:39px; height:39px;">';
-        const container = document.getElementsByClassName('container')[0] as HTMLElement;
-        if (container) {
-            const firstChild = container.children[0] as HTMLElement;
-            if (firstChild && firstChild.children.length >= 2) {
-                const innerHTML = firstChild.children[1].innerHTML;
-                const matchResult = innerHTML.match(/(.*> ){0,1}(.*)/);
-                if (matchResult) {
-                    const newInnerHTML = matchResult[2];
-                    firstChild.children[1].innerHTML = newInnerHTML;
-                }
-            }
+        const titlebar = document.querySelector('div.container > div:first-child');
+        if (titlebar) {
+            (titlebar as HTMLElement).style.marginLeft = (titlebar as HTMLElement).style.marginRight = '-15px';
         }
 
         GM_addStyle(
 `body {
-    background: url("' + BackgroundImage + '");
+    background: url(${BackgroundImage});
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-position: 50% 50%;
     background-size: cover;
 }
 .uoj-content {
-    background-color: #fff;
+    background-color: ${!Darktheme ? '#fff' : '#222'};
     margin: 16px -16px;
     padding: 16px 16px;
     opacity: 0.85;
