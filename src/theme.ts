@@ -27,34 +27,34 @@ code {
     ${Darktheme ? 'border-color: rgba(255,255,255,.03);' : ''}
 }
 pre, pre.sh_sourceCode {
-    ${Darktheme ? 'color: #e0e0e0!important; background-color: #0d1117!important; border-color: #2e2e30!important;' : ''}
+    ${Darktheme ? 'color: #e0e0e0!important; background-color: #222!important; border-color: #2e2e30!important;' : ''}
 }
-code.sh_cpp>span {
+code>span {
     font-style: normal !important;
     font-weight: 400 !important;
 }
-code.sh_cpp>span.sh_preproc,
-code.sh_cpp>span.sh_keyword,
-code.sh_cpp>span.sh_type {
-    color: #8959a8;
+code>span.sh_preproc,
+code>span.sh_keyword,
+code>span.sh_type {
+    color: ${!Darktheme ? '#8959a8' : '#cc99cd'} !important;
 }
-code.sh_cpp>span.sh_string {
-    color: #718c00;
+code>span.sh_string {
+    color: ${!Darktheme ? '#718c00' : '#7ec699'} !important;
 }
-code.sh_cpp>span.sh_cbracket {
-    color: #4d4d4c;
+code>span.sh_cbracket {
+    color: ${!Darktheme ? '#4d4d4c' : '#cccccc'} !important;
 }
-code.sh_cpp>span.sh_symbol {
-    color: #3e999f;
+code>span.sh_symbol {
+    color: ${!Darktheme ? '#3e999f' : '#67cdcc'} !important;
 }
-code.sh_cpp>span.sh_number {
-    color: #f5871f;
+code>span.sh_number {
+    color: ${!Darktheme ? '#f5871f' : '#f08d49'} !important;
 }
-code.sh_cpp>span.sh_function {
-    color: #4271ae;
+code>span.sh_function {
+    color: ${!Darktheme ? '#4271ae' : '#f08d49'} !important;
 }
-code.sh_cpp>span.sh_comment {
-    color: #8e908c;
+code>span.sh_comment {
+    color: ${!Darktheme ? '#8e908c' : '#999999'} !important;
 }
 .copybutton {
     font-size: 1.1em;
@@ -80,7 +80,7 @@ code.sh_cpp>span.sh_comment {
         GM_addStyle(`
 body {
     color: #f2eee8;
-    background-color: #0d1117;
+    background-color: #222;
 }
 
 a.header-a {
@@ -137,12 +137,12 @@ a.bg-light:focus,a.bg-light:hover,button.bg-light:focus,button.bg-light:hover {
 }
 
 .page-link, .page-item.disabled .page-link {
-    background-color: #0d1117;
+    background-color: #222;
     border-color: #2e2e30;
 }
 
 .card {
-    background-color: #0d1117;
+    background-color: #222;
 }
 .card-header {
     background-color: rgba(255,255,255,.03);
@@ -151,11 +151,11 @@ a.bg-light:focus,a.bg-light:hover,button.bg-light:focus,button.bg-light:hover {
 
 .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
     color: #f2eee8;
-    background-color: #0d1117;
-    border-color: #2e2e30 #2e2e30 #0d1117;
+    background-color: #222;
+    border-color: #2e2e30 #2e2e30 #222;
 }
 .nav-tabs .nav-link:focus, .nav-tabs .nav-link:hover {
-    border-color: #2e2e30 #2e2e30 #0d1117;
+    border-color: #2e2e30 #2e2e30 #222;
 }
 .nav-tabs {
     border-bottom-color: #2e2e30;
@@ -169,7 +169,7 @@ a.bg-light:focus,a.bg-light:hover,button.bg-light:focus,button.bg-light:hover {
 }
 
 .bootstrap-switch .bootstrap-switch-handle-on, .bootstrap-switch .bootstrap-switch-handle-off, .bootstrap-switch .bootstrap-switch-label {
-    background-color: #0d1117;
+    background-color: #222;
     border-color: #2e2e30;
     color: #f2eee8;
 }
@@ -197,28 +197,28 @@ a.bg-light:focus,a.bg-light:hover,button.bg-light:focus,button.bg-light:hover {
 
 .form-control {
     color: #a99e91;
-    background-color: #0d1117;
+    background-color: #222;
     border-color: #2e2e30;
 }
 .form-control:focus {
     color: #a99e91;
-    background-color: #0d1117;
+    background-color: #222;
 }
 
 .img-thumbnail, .img-rounded {
-    background-color: #0d1117;
+    background-color: #222;
 }
 
 .list-group {
-    background-color: #0d1117;
+    background-color: #222;
 }
 .list-group-item {
-    background-color: #0d1117;
+    background-color: #222;
     border-color: rgba(255, 255, 255, .125);
 }
 
 .dropdown-menu.show {
-    background-color: #0d1117;
+    background-color: #222;
     border-color: rgba(255, 255, 255, .15);
 }
 .dropdown-item {
@@ -231,7 +231,7 @@ a.bg-light:focus,a.bg-light:hover,button.bg-light:focus,button.bg-light:hover {
 }
 
 .CodeMirror, .CodeMirror-scroll {
-    background-color: #0d1117;
+    background-color: #222;
     color: #f2eee8;
 }
 .CodeMirror-activeline-background, .CodeMirror-scroll .CodeMirror-activeline-background {
@@ -241,12 +241,12 @@ a.bg-light:focus,a.bg-light:hover,button.bg-light:focus,button.bg-light:hover {
     border-left-color: white!important;
 }
 .CodeMirror-gutters, .CodeMirror-scroll > .CodeMirror-gutters {
-    background-color: #0d1117;
+    background-color: #222;
     border-right-color: #59554f;
     color: #59554f;
 }
 .CodeMirror-linenumber {
-    background-color: #0d1117;
+    background-color: #222;
     color: #59554f;
 }
 .blog-content-md-editor-toolbar {

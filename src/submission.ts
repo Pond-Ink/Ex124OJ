@@ -5,7 +5,7 @@ declare function sh_highlightDocument(): void;
 
 function SubmissionCrack() {
     const content = document.querySelector('div.uoj-content');
-    if (!content || content.textContent!.includes('404')) {
+    if (!content || !content.children.length && !content.children[0].className.includes('table-responsive')) {
         return;
     }
     GM_xmlhttpRequest({
@@ -18,6 +18,9 @@ function SubmissionCrack() {
             } else {
                 SubmissionCard({});
             }
+        },
+        onerror: (error) => {
+            SubmissionCard({});
         }
     });
 }

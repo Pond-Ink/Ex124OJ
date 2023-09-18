@@ -1,4 +1,4 @@
-export const version = "1.1.2";
+export const version = "1.1.3";
 
 export var BackgroundImage: string;
 export var SiteIconImage: string;
