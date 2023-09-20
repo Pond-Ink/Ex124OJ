@@ -1,4 +1,4 @@
-import { BackgroundImage, SiteIconImage, SiteIconSmallImage, Darktheme } from "./variables";
+import { BackgroundImage, SiteIconImage, Darktheme } from "./variables";
 
 export function Background() {
     if (BackgroundImage) {
@@ -39,17 +39,12 @@ function getIcon() {
     else return '/images/logo.png';
 }
 
-function getIconSmall() {
-    if (SiteIconSmallImage) return SiteIconSmallImage;
-    else return getIcon();
-}
-
 export function changeIcon() {
     const LogoURLRegExp = /^.*\/images\/logo(_small){0,1}.png$/;
     var Links = document.getElementsByTagName('link');
     for (var link in Links) {
         if (Links[link] && Links[link].nodeType && Links[link].getAttribute('rel') == 'shortcut icon') {
-            Links[link].setAttribute('href', getIconSmall());
+            Links[link].setAttribute('href', getIcon());
         }
     }
     var Icons = document.getElementsByTagName('img');
@@ -61,7 +56,7 @@ export function changeIcon() {
                     Icons[icon].setAttribute('src', getIcon());
                     Icons[icon].setAttribute('style', 'width:100%;height:auto;object-fit:cover');
                 } else {
-                    Icons[icon].setAttribute('src', getIconSmall());
+                    Icons[icon].setAttribute('src', getIcon());
                 }
             }
         }

@@ -169,13 +169,6 @@ a.bg-light:focus,a.bg-light:hover,button.bg-light:focus,button.bg-light:hover {
     border-bottom-color: #2e2e30;
 }
 
-.border-info, .bg-info {
-    opacity: 0.9;!important;
-}
-.btn-info, .btn-primary, .btn-warning, .btn-danger {
-    opacity: 0.9;
-}
-
 .bootstrap-switch .bootstrap-switch-handle-on, .bootstrap-switch .bootstrap-switch-handle-off, .bootstrap-switch .bootstrap-switch-label {
     background-color: #222;
     border-color: #2e2e30;
@@ -189,7 +182,7 @@ a.bg-light:focus,a.bg-light:hover,button.bg-light:focus,button.bg-light:hover {
     background-color: rgba(255,255,255,.05);
 }
 .table-hover tbody tr:hover {
-    color: #d1c9bf;
+    color: #cccccc;
     background-color: rgba(255,255,255,.075);
 }
 .table thead th {
@@ -204,12 +197,12 @@ a.bg-light:focus,a.bg-light:hover,button.bg-light:focus,button.bg-light:hover {
 }
 
 .form-control {
-    color: #a99e91;
+    color: #f2eee8;
     background-color: #222;
     border-color: #2e2e30;
 }
 .form-control:focus {
-    color: #a99e91;
+    color: #f2eee8;
     background-color: #222;
 }
 
