@@ -24,8 +24,13 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: Configure Git
+        run: |
+          git config --global user.name "${{ secrets.GH_USERNAME }}"
+          git config --global user.email "${{ secrets.GH_EMAIL }}"
+
       - name: Push to GitHub
         run: |
           git add .
           git commit -m "Build user script"
-          git push --force
+          git push
