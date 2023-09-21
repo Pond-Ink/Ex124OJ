@@ -254,6 +254,11 @@ a.bg-light:focus,a.bg-light:hover,button.bg-light:focus,button.bg-light:hover {
     background: #343a40
 }
 
+#rating-tooltip {
+    background-color: rgb(0,17,17)!important;
+    border: rgb(0,34,34)!important;
+}
+
 #MathJax_ZoomFrame {
     color: black;
 }
