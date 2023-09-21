@@ -1,8 +1,8 @@
-import { version, BackgroundImage, SiteIconImage, SiteIconSmallImage, Academic, Ligatures, Darktheme, DarkthemeSelect } from "./variables";
+import { version, BackgroundImage, SiteIconImage, Academic, Ligatures, Darktheme, DarkthemeSelect } from "./variables";
 
 export function Settings() {
-    GM_addStyle(
-        `.settings-overlay {
+    GM_addStyle(`
+.settings-overlay {
     position: fixed;
     height: 100%;
     width: 100%;
@@ -140,18 +140,6 @@ input:checked + .slider:before {
     siteIconImageInput.setAttribute('style', 'flex-grow: 1; height: 2em; width: initial');
     siteIconImageInput.setAttribute('class', 'form-control');
 
-    const siteIconSmall = document.createElement('div');
-    SettingsPopup.appendChild(siteIconSmall);
-    siteIconSmall.setAttribute('class', 'row');
-    const siteIconSmallImageLabel = document.createElement('strong');
-    siteIconSmall.appendChild(siteIconSmallImageLabel);
-    siteIconSmallImageLabel.setAttribute('style', 'font-size: 1.25em');
-    siteIconSmallImageLabel.innerHTML = '网站图标（小）&emsp;';
-    const siteIconSmallImageInput = document.createElement('input');
-    siteIconSmall.appendChild(siteIconSmallImageInput);
-    siteIconSmallImageInput.setAttribute('style', 'flex-grow: 1; height: 2em; width: initial');
-    siteIconSmallImageInput.setAttribute('class', 'form-control');
-
     const Switchs = document.createElement('div');
     SettingsPopup.appendChild(Switchs);
     Switchs.setAttribute('class', 'row');
@@ -198,7 +186,6 @@ input:checked + .slider:before {
 
     backgroundImageInput.value = BackgroundImage;
     siteIconImageInput.value = SiteIconImage;
-    siteIconSmallImageInput.value = SiteIconSmallImage;
     (document.getElementById('AcademicSwitch') as HTMLInputElement).checked = Academic;
     (document.getElementById('LigaturesSwitch') as HTMLInputElement).checked = Ligatures;
     darkthemeSelect.value = DarkthemeSelect;
@@ -213,7 +200,6 @@ input:checked + .slider:before {
     Ok.onclick = function () {
         GM_setValue('BackgroundImage', backgroundImageInput.value);
         GM_setValue('SiteIconImage', siteIconImageInput.value);
-        GM_setValue('SiteIconSmallImage', siteIconSmallImageInput.value);
         GM_setValue('Academic', (document.getElementById('AcademicSwitch') as HTMLInputElement).checked);
         GM_setValue('Ligatures', (document.getElementById('LigaturesSwitch') as HTMLInputElement).checked);
         GM_setValue('Darktheme', darkthemeSelect.value);
