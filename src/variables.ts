@@ -1,8 +1,7 @@
-export const version = "1.1.4";
+export const version = "1.1.5";
 
 export var BackgroundImage: string;
 export var SiteIconImage: string;
-export var SiteIconSmallImage: string;
 export var Academic: boolean;
 export var Ligatures: boolean;
 export var DarkthemeSelect: "follow" | "light" | "dark";
@@ -24,7 +23,6 @@ function getRandomColorCode() {
 export function getVariables(callback: Function) {
     BackgroundImage = GM_getValue('BackgroundImage', '');
     SiteIconImage = GM_getValue('SiteIconImage', '');
-    SiteIconSmallImage = GM_getValue('SiteIconSmallImage', '');
     Academic = GM_getValue('Academic', false);
     Ligatures = GM_getValue('Ligatures', true);
     DarkthemeSelect = GM_getValue('Darktheme', "follow");
