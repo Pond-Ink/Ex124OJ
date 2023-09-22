@@ -1,4 +1,4 @@
-export const version = "1.1.5";
+export const version = "1.1.6";
 
 export var BackgroundImage: string;
 export var SiteIconImage: string;
@@ -20,7 +20,7 @@ function getRandomColorCode() {
     return colorCode;
 }
 
-export function getVariables(callback: Function) {
+export function getVariables() {
     BackgroundImage = GM_getValue('BackgroundImage', '');
     SiteIconImage = GM_getValue('SiteIconImage', '');
     Academic = GM_getValue('Academic', false);
@@ -28,38 +28,45 @@ export function getVariables(callback: Function) {
     DarkthemeSelect = GM_getValue('Darktheme', "follow");
     Darktheme = (DarkthemeSelect == 'light' || DarkthemeSelect == 'dark') ? DarkthemeSelect == 'dark' : (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
 
+    const variables = GM_getValue('public_variables', {});
+    const randomcolor = getRandomColorCode();
+    NameColorList = variables.NameColorList;
+    if (NameColorList) {
+        for (let i in NameColorList) {
+            for (let j = 0; j < NameColorList[i].length; j++) {
+                if (NameColorList[i][j] == 'rand') {
+                    NameColorList[i][j] = randomcolor;
+                }
+            }
+        }
+    }
+    CCFBadgeList = variables.CCFBadgeList;
+    if (CCFBadgeList) {
+        for (let i in CCFBadgeList) {
+            for (let j = 0; j < CCFBadgeList[i].length; j++) {
+                if (CCFBadgeList[i][j] == 'rand') {
+                    CCFBadgeList[i][j] = randomcolor;
+                }
+            }
+        }
+    }
+    TagBadgeList = variables.TagBadgeList;
+    if (TagBadgeList) {
+        for (let i in TagBadgeList) {
+            for (let j = 0; j < TagBadgeList[i].length; j++) {
+                if (TagBadgeList[i][j].color == 'rand') {
+                    TagBadgeList[i][j].color = randomcolor;
+                }
+            }
+        }
+    }
+
     GM_xmlhttpRequest({
         method: "GET",
         url: "https://ex124oj.pond.ink/public/variables.json",
-        revalidate: true,
+        nocache: true,
         onload: (data) => {
-            const variables = JSON.parse(data.response);
-            const randomcolor = getRandomColorCode();
-            NameColorList = variables.NameColorList;
-            for (let i in NameColorList) {
-                for (let j = 0; j < NameColorList[i].length; j++) {
-                    if (NameColorList[i][j] == 'rand') {
-                        NameColorList[i][j] = randomcolor;
-                    }
-                }
-            }
-            CCFBadgeList = variables.CCFBadgeList;
-            for (let i in CCFBadgeList) {
-                for (let j = 0; j < CCFBadgeList[i].length; j++) {
-                    if (CCFBadgeList[i][j] == 'rand') {
-                        CCFBadgeList[i][j] = randomcolor;
-                    }
-                }
-            }
-            TagBadgeList = variables.TagBadgeList;
-            for (let i in TagBadgeList) {
-                for (let j = 0; j < TagBadgeList[i].length; j++) {
-                    if (TagBadgeList[i][j].color == 'rand') {
-                        TagBadgeList[i][j].color = randomcolor;
-                    }
-                }
-            }
-            callback();
+            GM_setValue('public_variables', JSON.parse(data.response));
         }
     });
 }

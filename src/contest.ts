@@ -1,4 +1,3 @@
-import { NameBadge, NameColor } from "./name";
 import { Darktheme } from "./variables";
 import { isContest } from "./utils";
 
@@ -54,7 +53,7 @@ export function ContestHome() {
         GM_xmlhttpRequest({
             method: "GET",
             url: `https://ex124oj.pond.ink/api/contest/${isContest()![1]}`,
-            revalidate: true,
+            nocache: true,
             onload: (data) => {
                 if (data.status == 200) {
                     const res = JSON.parse(data.response);
@@ -65,7 +64,7 @@ export function ContestHome() {
                     const content = document.querySelector('div.uoj-content');
                     if (content && res.content) {
                         content.innerHTML = res.content;
-                        eval('$(".countdown").countdown();');
+                        eval('unsafeWindow.$(".countdown").countdown();');
                     }
                 }
             }
@@ -118,7 +117,7 @@ function ProblemTitles() {
         GM_xmlhttpRequest({
             method: "GET",
             url: `/contest/${contest_id}`,
-            revalidate: true,
+            nocache: true,
             onload: (data) => {
                 ContestHomepage = (new DOMParser()).parseFromString(data.response, 'text/html');
                 solve();
@@ -169,7 +168,7 @@ function ShowStandings() {
     }
 }
 
-function displayStandings(initial?: boolean) {
+function displayStandings() {
     const standingsArea = document.querySelector('div#standings') as HTMLElement;
     if (!standingsArea) {
         return;
@@ -208,10 +207,6 @@ function displayStandings(initial?: boolean) {
     if (tableBefore && tableBefore.children[0]) {
         const ScrollRight = parseInt(window.getComputedStyle(tableBefore.children[0]).width) - tableBefore.scrollLeft;
         showStandings();
-        // if (!initial) {
-            NameColor(standingsArea);
-            NameBadge(standingsArea);
-        // }
         ShowStandings();
         const tableAfter = document.querySelector('div.table-responsive');
         if (tableAfter && tableAfter.children[0]) {
@@ -286,6 +281,6 @@ div#standings > div.table-responsive > table > tbody > tr:nth-of-type(odd) > td.
 `);
     const ProblemSum = document.querySelectorAll('div#standings > div.table-responsive > table > thead > tr > th').length - 3;
     Problemchecked = new Array(ProblemSum).fill(true);
-    displayStandings(true);
+    displayStandings();
     NavBar(ProblemSum);
 }

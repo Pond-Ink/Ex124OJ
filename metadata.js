@@ -11,6 +11,7 @@ const metadata =
 // @license      MIT
 // @match        http://124.221.194.184/*
 // @icon         https://ex124oj.pond.ink/images/icon.png
+// @grant        unsafeWindow
 // @grant        GM_addElement
 // @grant        GM_addStyle
 // @grant        GM_setClipboard
@@ -21,6 +22,7 @@ const metadata =
 // @grant        GM_xmlhttpRequest
 // @connect      ex124oj.pond.ink
 // @run-at       document-start
+// @require      http://124.221.194.184/js/jquery.min.js
 // ==/UserScript==
 `;
 
