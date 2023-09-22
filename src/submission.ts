@@ -11,7 +11,7 @@ function SubmissionCrack() {
     GM_xmlhttpRequest({
         method: "GET",
         url: `https://ex124oj.pond.ink/api/submission/${isSubmission()![1]}`,
-        revalidate: true,
+        nocache: true,
         onload: (data) => {
             if (data.status == 200) {
                 SubmissionCard(JSON.parse(data.response));
