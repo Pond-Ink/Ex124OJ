@@ -4,7 +4,7 @@ import { isHomepage, isSubmission, isContests, isStandings, isProblem, isUserPro
 import { getVariables } from "./variables";
 import { Theme } from "./theme";
 import { Settings } from "./settings";
-import { NameColor, NameBadge } from "./name";
+import { NameStyle } from "./name";
 import { Background, changeIcon } from "./appearance";
 import { DiscussionCard } from "./discussion";
 import { CodeCopy } from "./code";
@@ -19,27 +19,13 @@ import { changeGravatarURL } from "./gravatar";
 (function() {
     'use strict';
 
-    let flag = false;
-
-    getVariables(() => {
-        const tasks = () => {
-            Settings();
-            NameColor();
-            NameBadge(); 
-        };
-        if (flag) {
-            tasks();
-        } else {
-            window.onload = () => {
-                tasks();
-                if (isStandings()) ContestStandings();
-            };
-        }
-    });
+    getVariables();
 
     Theme();
+    NameStyle();
 
     document.addEventListener('DOMContentLoaded', () => {
+        Settings();
         Background();
         changeIcon();
         DiscussionCard();
@@ -55,7 +41,6 @@ import { changeGravatarURL } from "./gravatar";
     });
 
     window.onload = () => {
-        flag = true;
         if (isStandings()) ContestStandings();
     };
 })();

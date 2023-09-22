@@ -6,7 +6,7 @@ export function exAnnouncements() {
         GM_xmlhttpRequest({
             method: "GET",
             url: "https://ex124oj.pond.ink/categories/Announcements/",
-            revalidate: true,
+            nocache: true,
             onload: function(data) {
                 const Announcements = document.querySelector('div.uoj-content > div.card.card-default > div.card-body > div.row > div:first-child > table');
                 if (Announcements) {

@@ -91,7 +91,7 @@ ${ (() => {
         GM_xmlhttpRequest({
             method: "GET",
             url: `https://ex124oj.pond.ink/api${isProblem()![2] ? `/contest/${isProblem()![2]}` : ''}/problem/${isProblem()![3]}`,
-            revalidate: true,
+            nocache: true,
             onload: (data) => {
                 if (data.status == 200) {
                     const res = JSON.parse(data.response);
