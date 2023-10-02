@@ -1,4 +1,4 @@
-export const version = "1.1.7";
+export const version = "1.1.8";
 
 export var BackgroundImage: string;
 export var SiteIconImage: string;
@@ -9,6 +9,7 @@ export var Darktheme: boolean;
 
 export var NameColorList: { [key: string]: string[]; };
 export var CCFBadgeList: { [key: string]: string[]; };
+export var FFCBadgeList: { [key: string]: string[]; };
 export var TagBadgeList: { [key: string]: { color: string, text: string }[]; };
 
 function getRandomColorCode() {
@@ -46,6 +47,16 @@ export function getVariables() {
             for (let j = 0; j < CCFBadgeList[i].length; j++) {
                 if (CCFBadgeList[i][j] == 'rand') {
                     CCFBadgeList[i][j] = randomcolor;
+                }
+            }
+        }
+    }
+    FFCBadgeList = variables.FFCBadgeList;
+    if (FFCBadgeList) {
+        for (let i in FFCBadgeList) {
+            for (let j = 0; j < FFCBadgeList[i].length; j++) {
+                if (FFCBadgeList[i][j] == 'rand') {
+                    FFCBadgeList[i][j] = randomcolor;
                 }
             }
         }
