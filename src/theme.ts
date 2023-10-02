@@ -243,7 +243,7 @@ a.bg-light:focus,a.bg-light:hover,button.bg-light:focus,button.bg-light:hover {
     background-color: #241e17;
 }
 .CodeMirror div.CodeMirror-cursor {
-    border-left-color: white!important;
+    border-left-color: white;
 }
 .CodeMirror-selected {
     background: #464646;
