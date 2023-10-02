@@ -28,9 +28,9 @@ code {
 }
 pre, pre.sh_sourceCode {
 ${Darktheme ?  `
-    color: #e0e0e0 !important;
-    background-color: #222 !important;
-    border-color: #2e2e30 !important;
+    color: #e0e0e0;
+    background-color: #222;
+    border-color: #2e2e30;
 ` : ''}
 }
 code > span {
@@ -244,6 +244,12 @@ a.bg-light:focus,a.bg-light:hover,button.bg-light:focus,button.bg-light:hover {
 }
 .CodeMirror div.CodeMirror-cursor {
     border-left-color: white!important;
+}
+.CodeMirror-selected {
+    background: #464646;
+}
+.CodeMirror-focused .CodeMirror-selected {
+    background: #464626;
 }
 .CodeMirror-gutters, .CodeMirror-scroll > .CodeMirror-gutters {
     background-color: #222;
