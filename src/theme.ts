@@ -266,6 +266,23 @@ a.bg-light:focus,a.bg-light:hover,button.bg-light:focus,button.bg-light:hover {
 #MathJax_ZoomFrame {
     color: black;
 }
+
+.modal-content {
+    color: #f2eee8;
+    background-color: #222;
+    border-color: #2e2e30;
+}
+.modal-header {
+    color: #f2eee8;
+    background-color: #222;
+    border-color: #2e2e30;
+}
+.modal-footer {
+    color: #f2eee8;
+    background-color: #222;
+    border-color: #2e2e30;
+}
+
         `);
     }
 }
