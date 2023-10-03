@@ -21,9 +21,6 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Build
-        run: npm run build
-
       - name: Configure Git
         run: |
           git config --global user.name "${{ secrets.GH_USERNAME }}"
@@ -32,11 +29,22 @@ jobs:
           echo "${{ secrets.GH_SSH_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           git remote set-url origin git@github.com:${{ github.repository }}.git
+          git pull
+          git checkout -b build
+
+      - name: Create placeholder js file
+        run: |
+          mkdir -p dist
+          touch dist/ex124oj.user.js
+          git add -f dist/ex124oj.user.js
+          git commit -m "User script generating prepared"
+
+      - name: Build production js file
+        run: |
+          npm run build
+          git add -f dist/ex124oj.user.js
+          git commit -m "User script generating completed"
 
       - name: Push to GitHub
         run: |
-          git pull
-          git checkout -b build
-          git add -f dist/**
-          git commit -m "User script generating completed"
           git push -f origin build
