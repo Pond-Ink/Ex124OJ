@@ -7,6 +7,16 @@ export function DiscussionCard() {
         const discrd = document.createElement('div');
         discrd.setAttribute('class', 'giscus');
         footer.insertBefore(discrd, footer.firstChild);
+
+        const writebutton = document.createElement('button');
+        writebutton.setAttribute('class', 'btn btn-search btn-outline-primary');
+        writebutton.style.height = 'calc(1.5em + 0.75rem + 2px)';
+        writebutton.innerHTML = '<i class="fa fa-pen"> 写评论';
+        writebutton.onclick = () => {
+            $("html, body").animate({ scrollTop: $(document).height() }, "slow");
+        };
+        footer.insertBefore(writebutton, discrd);
+
         GM_addElement('script', {
             'src': 'https://giscus.app/client.js',
             'data-repo': 'Sukwants/Ex124OJ-discussions',
@@ -14,7 +24,7 @@ export function DiscussionCard() {
             'data-category': 'Ideas',
             'data-category-id': 'DIC_kwDOImiZLM4CTCIj',
             'data-mapping': 'pathname',
-            'data-strict': '0',
+            'data-strict': '1',
             'data-reactions-enabled': '1',
             'data-emit-metadata': '0',
             'data-input-position': 'bottom',
@@ -24,13 +34,14 @@ export function DiscussionCard() {
             'crossorigin': 'anonymous',
             'async': ''
         });
-        GM_addStyle(
-`.giscus {
+        GM_addStyle(`
+.giscus {
     display: ${(Academic == true ? 'none' : 'unset')};
 }
 .giscus-frame {
     margin-top: 20px;
-}`);
+}
+        `);
 
         const lanButton = document.getElementsByClassName('btn-group dropright mb-3')[0];
         const blankLine = document.createElement('div');
