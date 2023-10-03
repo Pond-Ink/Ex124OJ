@@ -28,9 +28,9 @@ code {
 }
 pre, pre.sh_sourceCode {
 ${Darktheme ?  `
-    color: #e0e0e0;
-    background-color: #222;
-    border-color: #2e2e30;
+    color: #e0e0e0 !important;
+    background-color: #222 !important;
+    border-color: #2e2e30 !important;
 ` : ''}
 }
 code > span {
@@ -236,37 +236,40 @@ a.bg-light:focus,a.bg-light:hover,button.bg-light:focus,button.bg-light:hover {
 }
 
 .CodeMirror, .CodeMirror-scroll {
-    background-color: #222;
-    color: #f2eee8;
+    background-color: #222 !important;
+    color: #f2eee8 !important;
 }
-.CodeMirror-activeline-background, .CodeMirror-scroll .CodeMirror-activeline-background {
-    background-color: #241e17;
+.CodeMirror pre {
+    background: transparent !important;
+}
+.CodeMirror-activeline-background, .CodeMirror-scroll {
+    background-color: #222 !important;
 }
 .CodeMirror div.CodeMirror-cursor {
-    border-left-color: white;
+    border-left-color: white !important;
 }
 .CodeMirror-selected {
-    background: #464646;
+    background: #464646 !important;
 }
 .CodeMirror-focused .CodeMirror-selected {
-    background: #464626;
+    background: #464626 !important;
 }
 .CodeMirror-gutters, .CodeMirror-scroll > .CodeMirror-gutters {
-    background-color: #222;
-    border-right-color: #59554f;
-    color: #59554f;
+    background-color: #222 !important;
+    border-right-color: #59554f !important;
+    color: #59554f !important;
 }
 .CodeMirror-linenumber {
-    background-color: #222;
-    color: #59554f;
+    background-color: #222 !important;
+    color: #59554f !important;
 }
 .blog-content-md-editor-toolbar {
     background: #343a40
 }
 
 #rating-tooltip {
-    background-color: rgb(0,17,17)!important;
-    border: rgb(0,34,34)!important;
+    background-color: rgb(0,17,17) !important;
+    border: rgb(0,34,34) !important;
 }
 
 #MathJax_ZoomFrame {
