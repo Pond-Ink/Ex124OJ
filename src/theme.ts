@@ -33,32 +33,32 @@ ${Darktheme ?  `
     border-color: #2e2e30 !important;
 ` : ''}
 }
-code > span {
+code > span, code > span > span {
     font-style: normal !important;
     font-weight: 400 !important;
 }
-code > span.sh_preproc,
-code > span.sh_keyword,
-code > span.sh_type {
+code > span.sh_preproc, code > span.sh_preproc > span.sh_preproc,
+code > span.sh_keyword, code > span.sh_keyword > span.sh_keyword,
+code > span.sh_type, code > span.sh_type > span.sh_type {
     color: ${!Darktheme ? '#8959a8' : '#cc99cd'} !important;
 }
-code > span.sh_string,
-code > span.sh_specialchar {
+code > span.sh_string, code > span.sh_string > span.sh_string,
+code > span.sh_specialchar, code > span.sh_specialchar > span.sh_specialchar {
     color: ${!Darktheme ? '#718c00' : '#7ec699'} !important;
 }
-code > span.sh_cbracket {
+code > span.sh_cbracket, code > span.sh_cbracket > span.sh_cbracket {
     color: ${!Darktheme ? '#4d4d4c' : '#cccccc'} !important;
 }
-code > span.sh_symbol {
+code > span.sh_symbol, code > span.sh_symbol > span.sh_symbol {
     color: ${!Darktheme ? '#3e999f' : '#67cdcc'} !important;
 }
-code > span.sh_number {
+code > span.sh_number, code > span.sh_number > span.sh_number {
     color: ${!Darktheme ? '#f5871f' : '#f08d49'} !important;
 }
-code > span.sh_function {
+code > span.sh_function, code > span.sh_function > span.sh_function {
     color: ${!Darktheme ? '#4271ae' : '#f08d49'} !important;
 }
-code > span.sh_comment {
+code > span.sh_comment, code > span.sh_comment > span.sh_comment {
     color: ${!Darktheme ? '#8e908c' : '#999999'} !important;
 }
 .copybutton {
