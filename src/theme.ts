@@ -2,15 +2,7 @@ import { Darktheme, Ligatures } from "./variables";
 
 export function Theme() {
     GM_addElement('link', {
-        href: 'https://cdn.bootcdn.net/ajax/libs/font-awesome/6.2.1/css/fontawesome.css',
-        rel: 'stylesheet'
-    });
-    GM_addElement('link', {
-        href: 'https://cdn.bootcdn.net/ajax/libs/font-awesome/6.2.1/css/brands.css',
-        rel: 'stylesheet'
-    });
-    GM_addElement('link', {
-        href: 'https://cdn.bootcdn.net/ajax/libs/font-awesome/6.2.1/css/solid.css',
+        href: 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css',
         rel: 'stylesheet'
     });
 
