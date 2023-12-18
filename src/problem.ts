@@ -153,6 +153,7 @@ ${ (() => {
         copy_md.setAttribute('role', 'button');
         copy_md.setAttribute('class', 'btn btn-primary float-right');
         copy_md.setAttribute('style', 'color: #fff;');
+        copy_md.setAttribute('href', 'javascript:void(0)');
         copy_md.innerHTML = '<i class="fa-brands fa-markdown"></i> 复制 MD';
         copy_md.addEventListener('click', function () {
             copy_md.innerHTML = '<i class="fa-solid fa-check"></i> 复制 MD';
@@ -162,7 +163,6 @@ ${ (() => {
                 url: `https://ex124oj.pond.ink/api/problem/${isProblem()![3]}/markdown`,
                 onload: function (data) {
                     if (data.status === 200) {
-                        console.log(data.response);
                         GM_setClipboard(data.response, "text");
                     } else {
                         console.error('fail to get markdown');
