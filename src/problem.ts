@@ -148,29 +148,6 @@ ${ (() => {
         const statisticsButton = document.querySelector('div.uoj-content > a[role=button]');
         if (statisticsButton) navbar.appendChild(statisticsButton);
 
-        const copy_md = document.createElement('a');
-        navbar.insertBefore(copy_md, null);
-        copy_md.setAttribute('role', 'button');
-        copy_md.setAttribute('class', 'btn btn-primary float-right');
-        copy_md.setAttribute('style', 'color: #fff;');
-        copy_md.setAttribute('href', 'javascript:void(0)');
-        copy_md.innerHTML = '<i class="fa-brands fa-markdown"></i> 复制 MD';
-        copy_md.addEventListener('click', function () {
-            copy_md.innerHTML = '<i class="fa-solid fa-check"></i> 复制 MD';
-            setTimeout(() => { copy_md.innerHTML = '<i class="fa-brands fa-markdown"></i> 复制 MD'; }, 500);
-            GM_xmlhttpRequest({
-                method: 'GET',
-                url: `https://ex124oj.pond.ink/api/problem/${isProblem()![3]}/markdown`,
-                onload: function (data) {
-                    if (data.status === 200) {
-                        GM_setClipboard(data.response, "text");
-                    } else {
-                        console.error('fail to get markdown');
-                    }
-                }
-            });
-        });
-
         const DownloadTag = document.createElement('a');
         navbar.appendChild(DownloadTag);
         DownloadTag.setAttribute('role', 'button');
@@ -178,6 +155,29 @@ ${ (() => {
         DownloadTag.setAttribute('href', '/download.php?type=problem&id=' + isProblem()![3]);
         DownloadTag.setAttribute('target', '_blank');
         DownloadTag.innerHTML = '<span class="glyphicon glyphicon-download-alt"></span> 下载数据';
+
+        GM_xmlhttpRequest({
+            method: 'GET',
+            url: `https://ex124oj.pond.ink/api/problem/${isProblem()![3]}/markdown`,
+            onload: function (data) {
+                if (data.status === 200) {
+                    const copy_md = document.createElement('a');
+                    navbar.insertBefore(copy_md, DownloadTag);
+                    copy_md.setAttribute('role', 'button');
+                    copy_md.setAttribute('class', 'btn btn-primary float-right');
+                    copy_md.setAttribute('href', 'javascript:void(0)');
+                    copy_md.innerHTML = '<i class="fa-brands fa-markdown"></i> 复制 MD';
+                    const problem_md_text = data.response;
+                    copy_md.addEventListener('click', () => {
+                        GM_setClipboard(problem_md_text, "text");
+                        copy_md.innerHTML = '<i class="fa-solid fa-check"></i> 复制 MD';
+                        setTimeout(() => { copy_md.innerHTML = '<i class="fa-brands fa-markdown"></i> 复制 MD'; }, 500);
+                    });
+                } else {
+                    console.error('fail to get markdown text');
+                }
+            }
+        });
 
         const navtabs = document.querySelector('div.uoj-content > ul[role=tablist]');
         if (navtabs) {
