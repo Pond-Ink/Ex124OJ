@@ -19,7 +19,7 @@ export function DiscussionCard() {
 
         GM_addElement('script', {
             'src': 'https://giscus.app/client.js',
-            'data-repo': 'Ex124OJ/Ex124OJ-discussions',
+            'data-repo': 'Pond-Ink/Ex124OJ-discussions',
             'data-repo-id': 'R_kgDOImiZLA',
             'data-category': 'Ideas',
             'data-category-id': 'DIC_kwDOImiZLM4CTCIj',
