@@ -2,11 +2,14 @@ export const version = "1.1.17";
 
 export var BackgroundImage: string;
 export var SiteIconImage: string;
+export var EnabledGroups: string;
 export var Academic: boolean;
 export var Ligatures: boolean;
 export var DarkthemeSelect: "follow" | "light" | "dark";
 export var Darktheme: boolean;
+export var GroupsEnabled: string[];
 
+export var GroupBelong: { [key: string]: string };
 export var NameColorList: { [key: string]: string[]; };
 export var CCFBadgeList: { [key: string]: string[]; };
 export var FFCBadgeList: { [key: string]: string[]; };
@@ -24,12 +27,20 @@ function getRandomColorCode() {
 export function getVariables() {
     BackgroundImage = GM_getValue('BackgroundImage', '');
     SiteIconImage = GM_getValue('SiteIconImage', '');
+    EnabledGroups = GM_getValue('EnabledGroups', '');
     Academic = GM_getValue('Academic', false);
     Ligatures = GM_getValue('Ligatures', true);
     DarkthemeSelect = GM_getValue('Darktheme', "follow");
     Darktheme = (DarkthemeSelect == 'light' || DarkthemeSelect == 'dark') ? DarkthemeSelect == 'dark' : (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
+    GroupsEnabled = EnabledGroups.split(/\s*,\s*/);
 
     const variables = GM_getValue('public_variables', {});
+    GroupBelong = {};
+    for (let group in variables.Groups) {
+        for (let name of variables.Groups[group]) {
+            GroupBelong[name] = group;
+        }
+    }
     const randomcolor = getRandomColorCode();
     NameColorList = variables.NameColorList;
     if (NameColorList) {

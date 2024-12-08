@@ -1,4 +1,4 @@
-import { version, BackgroundImage, SiteIconImage, Academic, Ligatures, Darktheme, DarkthemeSelect } from "./variables";
+import { version, BackgroundImage, SiteIconImage, EnabledGroups, Academic, Ligatures, Darktheme, DarkthemeSelect } from "./variables";
 
 export function Settings() {
     GM_addStyle(`
@@ -140,6 +140,18 @@ input:checked + .slider:before {
     siteIconImageInput.setAttribute('style', 'flex-grow: 1; height: 2em; width: initial');
     siteIconImageInput.setAttribute('class', 'form-control');
 
+    const EnabledGroupsR = document.createElement('div');
+    SettingsPopup.appendChild(EnabledGroupsR);
+    EnabledGroupsR.setAttribute('class', 'row');
+    const EnabledGroupsLabel = document.createElement('strong');
+    EnabledGroupsR.appendChild(EnabledGroupsLabel);
+    EnabledGroupsLabel.setAttribute('style', 'font-size: 1.25em');
+    EnabledGroupsLabel.innerHTML = '选中组别&emsp;&emsp;&emsp;&emsp;';
+    const EnabledGroupsInput = document.createElement('input');
+    EnabledGroupsR.appendChild(EnabledGroupsInput);
+    EnabledGroupsInput.setAttribute('style', 'flex-grow: 1; height: 2em; width: initial');
+    EnabledGroupsInput.setAttribute('class', 'form-control');
+
     const Switchs = document.createElement('div');
     SettingsPopup.appendChild(Switchs);
     Switchs.setAttribute('class', 'row');
@@ -186,6 +198,7 @@ input:checked + .slider:before {
 
     backgroundImageInput.value = BackgroundImage;
     siteIconImageInput.value = SiteIconImage;
+    EnabledGroupsInput.value = EnabledGroups;
     (document.getElementById('AcademicSwitch') as HTMLInputElement).checked = Academic;
     (document.getElementById('LigaturesSwitch') as HTMLInputElement).checked = Ligatures;
     darkthemeSelect.value = DarkthemeSelect;
@@ -200,6 +213,7 @@ input:checked + .slider:before {
     Ok.onclick = function () {
         GM_setValue('BackgroundImage', backgroundImageInput.value);
         GM_setValue('SiteIconImage', siteIconImageInput.value);
+        GM_setValue('EnabledGroups', EnabledGroupsInput.value);
         GM_setValue('Academic', (document.getElementById('AcademicSwitch') as HTMLInputElement).checked);
         GM_setValue('Ligatures', (document.getElementById('LigaturesSwitch') as HTMLInputElement).checked);
         GM_setValue('Darktheme', darkthemeSelect.value);

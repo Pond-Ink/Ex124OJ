@@ -17,7 +17,7 @@ export function ContestsCard() {
 
         let counter = 0;
         for (let i = 2; i < content.children.length; i++) {
-            console.log(content.children[i].tagName);
+            // console.log(content.children[i].tagName);
             if (content.children[i].tagName.toUpperCase() == 'H4') {
                 const isActive = !counter;
                 const title = document.createElement('li');
