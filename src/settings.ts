@@ -1,4 +1,4 @@
-import { version, BackgroundImage, SiteIconImage, EnabledGroups, Academic, Ligatures, Darktheme, DarkthemeSelect } from "./variables";
+import { version, BackgroundImage, SiteIconImage, EnabledGroups, Academic, Ligatures, Darktheme, DarkthemeSelect, NewYearMagic, NameColorList, TagBadgeList, NewYearMagicBot } from "./variables";
 
 export function Settings() {
     GM_addStyle(`
@@ -196,12 +196,54 @@ input:checked + .slider:before {
     darkthemeSelect.style.verticalAlign = 'middle';
     darkthemeSelect.innerHTML = '<option value="follow">跟随系统</option><option value="light">Light</option><option value="dark">Dark</option>';
 
+    const NewYearMagicR = document.createElement('div');
+    const NameColorLabel = document.createElement('strong');
+    const NameColorInput = document.createElement('input');
+    const TagColorLabel = document.createElement('strong');
+    const TagColorInput = document.createElement('input');
+    const TagContentLabel = document.createElement('strong');
+    const TagContentInput = document.createElement('input');
+
+    NewYearMagicR.setAttribute('class', 'row');
+    NewYearMagicR.appendChild(NameColorLabel);
+    NameColorLabel.setAttribute('style', 'font-size: 1.25em');
+    NameColorLabel.innerHTML = 'NameColor&emsp;';
+    NewYearMagicR.appendChild(NameColorInput);
+    NameColorInput.setAttribute('style', 'flex-grow: 1; height: 2em; width: 100px');
+    NameColorInput.setAttribute('class', 'form-control');
+    NewYearMagicR.setAttribute('class', 'row');
+
+    NewYearMagicR.appendChild(TagColorLabel);
+    TagColorLabel.setAttribute('style', 'font-size: 1.25em');
+    TagColorLabel.innerHTML = '&emsp;TagColor&emsp;';
+    NewYearMagicR.appendChild(TagColorInput);
+    TagColorInput.setAttribute('style', 'flex-grow: 1; height: 2em; width: 100px');
+    TagColorInput.setAttribute('class', 'form-control');
+
+    NewYearMagicR.setAttribute('class', 'row');
+    NewYearMagicR.appendChild(TagContentLabel);
+    TagContentLabel.setAttribute('style', 'font-size: 1.25em');
+    TagContentLabel.innerHTML = '&emsp;TagContent&emsp;';
+    NewYearMagicR.appendChild(TagContentInput);
+    TagContentInput.setAttribute('style', 'flex-grow: 1; height: 2em; width: 100px');
+    TagContentInput.setAttribute('class', 'form-control');
+    
+    if(NewYearMagic) SettingsPopup.appendChild(NewYearMagicR);
+
     backgroundImageInput.value = BackgroundImage;
     siteIconImageInput.value = SiteIconImage;
     EnabledGroupsInput.value = EnabledGroups;
     (document.getElementById('AcademicSwitch') as HTMLInputElement).checked = Academic;
     (document.getElementById('LigaturesSwitch') as HTMLInputElement).checked = Ligatures;
     darkthemeSelect.value = DarkthemeSelect;
+
+    const UserName = document.getElementsByClassName('nav-link dropdown-toggle')[0].firstElementChild!.childNodes[0].textContent?.trimEnd();
+    
+    if(NewYearMagic) {
+        NameColorInput.value = NameColorList[UserName!].join(',');
+        TagColorInput.value = TagBadgeList[UserName!][0].color;
+        TagContentInput.value = TagBadgeList[UserName!][0].text;
+    }
 
     const FooterRow = document.createElement('div');
     FooterRow.setAttribute('class', 'settings-footerbar');
@@ -217,6 +259,29 @@ input:checked + .slider:before {
         GM_setValue('Academic', (document.getElementById('AcademicSwitch') as HTMLInputElement).checked);
         GM_setValue('Ligatures', (document.getElementById('LigaturesSwitch') as HTMLInputElement).checked);
         GM_setValue('Darktheme', darkthemeSelect.value);
+        
+        if(NewYearMagic && (NameColorInput.value != NameColorList[UserName!].join(',') || TagColorInput.value != TagBadgeList[UserName!][0].color || TagContentInput.value != TagBadgeList[UserName!][0].text) ) 
+        {
+            fetch("http://124.221.194.184/user/msg", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded"
+                },
+                body: new URLSearchParams({
+                    user_msg: "1",
+                    receiver: NewYearMagicBot,
+                    message: `{\"NameColor\": ${NameColorInput.value ? `\"${NameColorInput.value}\"` : "null"}, \"TagColor\": ${TagColorInput.value ? `\"${TagColorInput.value}\"` : "null"}, \"TagContent\": ${TagContentInput.value ? `\"${TagContentInput.value}\"` : "null"}}`
+                }),
+            })
+            fetch(`https://ex124oj.pond.ink/api/magic/${UserName}`, {
+                method: "POST",
+                headers: {},
+                body: new URLSearchParams({}),
+            })
+            const start = Date.now();
+            while (Date.now() - start < 2000) {}
+        }
+
         location.reload();
     };
     const Clear = document.createElement('button');
