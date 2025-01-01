@@ -14,6 +14,8 @@ export var NameColorList: { [key: string]: string[]; };
 export var CCFBadgeList: { [key: string]: string[]; };
 export var FFCBadgeList: { [key: string]: string[]; };
 export var TagBadgeList: { [key: string]: { color: string, text: string }[]; };
+export var NewYearMagic: boolean;
+export var NewYearMagicBot: string;
 
 function getRandomColorCode() {
     const letters = '0123456789ABCDEF';
@@ -41,8 +43,17 @@ export function getVariables() {
             GroupBelong[name] = group;
         }
     }
+    NewYearMagic = variables.NewYearMagic;
+    NewYearMagicBot = variables.NewYearMagicBot;
     const randomcolor = getRandomColorCode();
     NameColorList = variables.NameColorList;
+    if (NewYearMagic && variables.NewYearMagicNameColorList) {
+        for (let i in variables.NewYearMagicNameColorList) {
+            for (let j = 0; j < variables.NewYearMagicNameColorList[i].length; j++) {
+                NameColorList[i][j] = variables.NewYearMagicNameColorList[i][j];
+            }
+        }
+    }
     if (NameColorList) {
         for (let i in NameColorList) {
             for (let j = 0; j < NameColorList[i].length; j++) {
@@ -73,6 +84,18 @@ export function getVariables() {
         }
     }
     TagBadgeList = variables.TagBadgeList;
+    if (NewYearMagic && variables.NewYearMagicTagBadgeList) {
+        for (let i in variables.NewYearMagicTagBadgeList) {
+            for (let j = 0; j < variables.NewYearMagicTagBadgeList[i].length; j++) {
+                if(variables.NewYearMagicTagBadgeList[i][j].color) {
+                    TagBadgeList[i][j].color = variables.NewYearMagicTagBadgeList[i][j].color;
+                }
+                if(variables.NewYearMagicTagBadgeList[i][j].text) {
+                    TagBadgeList[i][j].text = variables.NewYearMagicTagBadgeList[i][j].text;
+                }
+            }
+        }
+    }
     if (TagBadgeList) {
         for (let i in TagBadgeList) {
             for (let j = 0; j < TagBadgeList[i].length; j++) {
