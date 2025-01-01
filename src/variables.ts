@@ -49,8 +49,9 @@ export function getVariables() {
     NameColorList = variables.NameColorList;
     if (NewYearMagic && variables.NewYearMagicNameColorList) {
         for (let i in variables.NewYearMagicNameColorList) {
+            if(!variables.NewYearMagicNameColorList[i]) continue;
             for (let j = 0; j < variables.NewYearMagicNameColorList[i].length; j++) {
-                NameColorList[i][j] = variables.NewYearMagicNameColorList[i][j];
+                if(variables.NewYearMagicNameColorList[i][j]) NameColorList[i][j] = variables.NewYearMagicNameColorList[i][j];
             }
         }
     }
