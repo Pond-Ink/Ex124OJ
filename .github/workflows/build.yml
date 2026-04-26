@@ -8,10 +8,14 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+        with:
+          persist-credentials: true
 
       - name: Set up Node.js
         uses: actions/setup-node@v2
@@ -23,27 +27,23 @@ jobs:
 
       - name: Configure Git
         run: |
-          git config --global user.name "${{ secrets.GH_USERNAME }}"
-          git config --global user.email "${{ secrets.GH_EMAIL }}"
-          mkdir -p ~/.ssh/
-          echo "${{ secrets.GH_SSH_KEY }}" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          git remote set-url origin git@github.com:${{ github.repository }}.git
-          git pull
-          git checkout -b build
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git remote set-url origin https://github.com/${{ github.repository }}.git
+          git checkout -B build
 
       - name: Create placeholder js file
         run: |
           mkdir -p dist
           touch dist/ex124oj.user.js
           git add -f dist/ex124oj.user.js
-          git commit -m "User script generating prepared"
+          git diff --cached --quiet || git commit -m "User script generating prepared"
 
       - name: Build production js file
         run: |
           npm run build
           git add -f dist/ex124oj.user.js
-          git commit -m "User script generating completed"
+          git diff --cached --quiet || git commit -m "User script generating completed"
 
       - name: Push to GitHub
         run: |
