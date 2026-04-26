@@ -12,9 +12,17 @@ jobs:
       contents: write
 
     steps:
+      - name: Generate bot token
+        id: generate-token
+        uses: tibdex/github-app-token@v2
+        with:
+          app_id: ${{ secrets.BUILD_BOT_ID }}
+          private_key: ${{ secrets.BUILD_BOT_PRIVATE_KEY }}
+
       - name: Checkout code
         uses: actions/checkout@v2
         with:
+          token: ${{ steps.generate-token.outputs.token }}
           persist-credentials: true
 
       - name: Set up Node.js
@@ -27,9 +35,9 @@ jobs:
 
       - name: Configure Git
         run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git remote set-url origin https://github.com/${{ github.repository }}.git
+          git config --global user.name "pond-ink-build-bot[bot]"
+          git config --global user.email "pond-ink-build-bot[bot]@users.noreply.github.com"
+          git remote set-url origin https://x-access-token:${{ steps.generate-token.outputs.token }}@github.com/${{ github.repository }}.git
           git checkout -B build
 
       - name: Create placeholder js file
