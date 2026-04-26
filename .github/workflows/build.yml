@@ -8,13 +8,18 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
-
     steps:
+      - name: Generate bot token
+        id: generate-token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.BUILD_BOT_ID }}
+          private-key: ${{ secrets.BUILD_BOT_PRIVATE_KEY }}
+
       - name: Checkout code
         uses: actions/checkout@v2
         with:
+          token: ${{ steps.generate-token.outputs.token }}
           persist-credentials: true
 
       - name: Set up Node.js
@@ -27,8 +32,8 @@ jobs:
 
       - name: Configure Git
         run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "pond-ink-build-bot[bot]"
+          git config --global user.email "pond-ink-build-bot[bot]@users.noreply.github.com"
           git remote set-url origin https://github.com/${{ github.repository }}.git
           git checkout -B build
 
