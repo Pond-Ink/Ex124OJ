@@ -14,10 +14,10 @@ jobs:
     steps:
       - name: Generate bot token
         id: generate-token
-        uses: tibdex/github-app-token@v2
+        uses: actions/create-github-app-token@v1
         with:
-          app_id: ${{ secrets.BUILD_BOT_ID }}
-          private_key: ${{ secrets.BUILD_BOT_PRIVATE_KEY }}
+          app-id: ${{ secrets.BUILD_BOT_ID }}
+          private-key: ${{ secrets.BUILD_BOT_PRIVATE_KEY }}
 
       - name: Checkout code
         uses: actions/checkout@v2
